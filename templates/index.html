@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	
+	{% if author %}
+	<meta name="author" content="{{ author }}">
+	{% endif %}
+	
+	{% if description %}
+	<meta name="description" content="{{ description }}">
+	{% endif %}
+	
+	{% if title %}
+	<title>Eaterank: {{ title }}</title>
+	{% else %}
+	<title>Eaterank</title>
+	{% endif %}
+</head>
+
+<body>
+</body>
+
+</html>
