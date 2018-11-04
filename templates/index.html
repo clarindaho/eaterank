@@ -5,19 +5,34 @@
 <head>
 	<meta charset="utf-8">
 	
-	{% if author %}
-	<meta name="author" content="{{ author }}">
+	{% if page.author %}
+	<meta name="author" content="{{ page.author }}">
 	{% endif %}
 	
-	{% if description %}
-	<meta name="description" content="{{ description }}">
-	{% endif %}
-	
-	{% if title %}
-	<title>Eaterank: {{ title }}</title>
+	{% if page.title %}
+	<title>Eaterank: {{ page.title }}</title>
 	{% else %}
 	<title>Eaterank</title>
 	{% endif %}
+	
+	{% if page.description %}
+	<meta name="description" content="{{ page.description }}">
+	{% else %}
+	<meta name="description" content="Eaterank is a web application that allows groups of people to avoid the frustrations of trying to figure out a place to eat. Groups can vote &#147;yes&#148; or &#147;no&#148; to an auto-generated list of restaurants based on an inputted location and selected cuisine type. After the last suggested restaurant, Eaterank will display the restaurant that received the most votes with additional details &#40;address, phone number, etc.&#41;.">
+	{% endif %}
+	
+	<meta property="og:image" content="{{ organization.logo }}">
+	
+	<meta property="og:title" content="Eaterank">
+	<meta name="twitter:title" content="Eaterank">
+	
+	<!--
+	<meta property="og:site_name" content="">
+	<meta property="og:url" content="">
+	<meta property="og:type" content="">
+	-->
+	
+	<meta property="og:description" content="Eaterank is a web application that allows groups of people to avoid the frustrations of trying to figure out a place to eat. Groups can vote &#147;yes&#148; or &#147;no&#148; to an auto-generated list of restaurants based on an inputted location and selected cuisine type. After the last suggested restaurant, Eaterank will display the restaurant that received the most votes with additional details &#40;address, phone number, etc.&#41;.">
 </head>
 
 <body>
