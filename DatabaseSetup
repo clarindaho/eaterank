@@ -18,7 +18,7 @@ mysql -u root -p
 source setup.sql // this will create the database for you
 
 Cd to project directory and use python 'classname'.py to run webpage
-**if you run into erro 'no module named configparser':
+**if you run into error 'no module named configparser':
 pip install configparser****
 
 To deactivate virtual environment:
