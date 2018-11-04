@@ -2,7 +2,7 @@
 -- setup file for eaterank project.
 --
 
--- create database and user, grant privileges to user
+-- create database and user and grant privileges to user
 create database eaterank_project;
 create user 'mysql_username'@'localhost' identified by 'mysql_password';
 grant all on eaterank_project.* to 'mysql_username'@'localhost';
