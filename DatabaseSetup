@@ -17,7 +17,9 @@ pip install mysql-connector
 mysql -u root -p
 source setup.sql // this will create the database for you
 
-Cd to project directory and use python 'classname'.py to run webpage
+cd to project directory and use the following command to run webpage
+python 'classname'.py
+
 **if you run into error 'no module named configparser':
 pip install configparser****
 
