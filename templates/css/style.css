@@ -1,15 +1,35 @@
+/*
+	Color Theme:
+		6D7C7F: grey
+		A9EEFF: sky blue
+		DAF8FF: white-ish
+		5C787F: navy
+		AFC6CC: light-grey
+	Font Theme:
+		Title/Header: Bowlby One SC
+		Paragraph Font: Happy Monkey
+ */
+
+
 html, body{
 	min-height: 100%;
 	font-weight: 300;
-	font-family: 
+	font-family: 'Happy Monkey', cursive;
+}
+
+.title {
+	font-family: 'Bowlby One SC', cursive;
+	font-weight: 400;
 }
 
 .main {
-
+	text-align: center;
+	font-size: 32px;
 }
 
 .main.start {
-
+	padding: 10%;
+	margin: 10px;
 }
 
 .main.restaurant_intro{
@@ -21,7 +41,7 @@ html, body{
 }
 
 .main.result{
-	
+
 }
 
 .restaurant_name{
