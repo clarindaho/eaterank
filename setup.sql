@@ -13,10 +13,11 @@ use eaterank_project;
 create table crew(
     crew_id int not null auto_increment primary key,
     location varchar(255),
-    cuisine_type0 varchar(255),
-    cuisine_type1 varchar(255),
-    cuisine_type2 varchar(255),
-    selected_restaurant varchar(255)
+    #cuisine_type0 varchar(255),
+    #cuisine_type1 varchar(255),
+    #cuisine_type2 varchar(255),
+    selected_restaurant varchar(255),
+    vote_started boolean
 );
 
 create table vote(
