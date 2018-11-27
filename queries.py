@@ -1,0 +1,41 @@
+INSERT_CREW = ("INSERT INTO crew(location, cuisine_type0, cuisine_type1, cuisine_type2, selected_restaurant)"
+                "VALUES(null, null, null, null, null)")
+UPDATE_CREW_LOCATION_CUISINETYPE = ("UPDATE crew"
+                                    "SET location=%s, cuisine_type0=%s, cuisine_type1=%s, cuisine_type2=%s"
+                                    "WHERE crew_id=%s")
+SELECTED_RESTAURANT = ("SELECT restaurant_id"
+                        "FROM vote"
+                        "GROUP BY restaurant_id"
+                        "HAVING MAX(vote_num)")
+UPDATE_CREW_SELECTED_RESTAURANT = ("UPDATE crew"
+                                    "SET selected_restaurant=%s"
+                                    "WHERE crew_id=%s")
+DELETE_CREW = ("DELETE FROM crew"
+                "WHERE crew_id=%s")
+
+RESTAURANT_EXISTS = ("SELECT restaurant_id"
+                    "FROM restaurant"
+                    "WHERE address=%s")
+INSERT_RESTAURANT = ("INSERT INTO restaurant(cuisine, address, phone_num, rating, price_range, image, menu_url)"
+                    "VALUES(%s, %s, %s, %s, %s, %s, %s)")
+GET_RESTAURANT_IDS = ("SELECT restaurant_id"
+                        "FROM vote"
+                        "WHERE crew_id=%s")
+GET_RESTID_INFO = ("SELECT cuisine, address, phone_num, rating, price_range, image, menu_url"
+                    "FROM restaurant"
+                    "WHERE restaurant_id=%s")
+INSERT_CREW_VOTES = ("INSERT INTO vote(crew_id, restaurant_id, vote_num)"
+                    "VALUES(%s, %s, 0)")
+
+GET_VOTE_NUM = ("SELECT vote_num FROM vote"
+                    "WHERE crew_id=%s AND restaurant_id=%s")
+
+UPDATE_VOTE_COUNT = ("UPDATE vote"
+                    "SET vote_num =%s"
+                    "WHERE crew_id=%s AND restaurant_id=%s")
+GET_CREW_VOTES = ("SELECT vote_id"
+                    "FROM vote"
+                    "WHERE crew_id=%s")
+
+DELETE_CREW_VOTES = ("DELETE FROM vote"
+                    "WHERE vote_id=%s")
