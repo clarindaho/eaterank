@@ -33,6 +33,11 @@ def sql_execute(sql, params):
     db.commit()
     cursor.close()
     db.close()
+	
+# Error page
+@app.errorhandler(404)
+def page_not_found(e):
+	return render_template('404.html'), 404
 
 # Home page
 @app.route('/')
@@ -41,9 +46,8 @@ def sql_execute(sql, params):
 def index():
 	return render_template('index.html')
 
-
 # Create group page
-@app.route('/group/create')
+@app.route('/group/create', methods=["GET", "POST"])
 def create_group():
 	sql_execute(INSERT_CREW)
 	crew_id = sql_query(GET_LAST_INSERT_ID)
@@ -211,7 +215,7 @@ def vote_against():
 						return render_template('results.html', page = page, restaurant = restaurant)
 					sleep(5)
 
-# finds the selected restaurant after the group leader requests results
+# Finds the selected restaurant after the group leader requests results
 @app.route('/endvoting', methods = ["GET", "POST"])
 def end_voting():
 	page = {'author': 'hello'}
@@ -229,7 +233,7 @@ def end_voting():
 			sql_execute(DELETE_CREW_VOTES, params=voteID)
 		sql_execute(DELETE_CREW, params=crew_id)
 		return render_template('results.html', page = page, restaurant = restaurant)
-
-# Main Method
+		
+# Main method
 if __name__ == '__main__':
 	app.run(**config['app'])

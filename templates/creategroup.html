@@ -4,16 +4,13 @@
 
 {% extends "base.html" %}
 
-<head>
-	{% block author %}Clarinda{% endblock %}
-	{% block title %}: Create Group{% endblock %}
-	{% block og_title %}: Create Group{% endblock %}
-	{% block description %}Create groups for voting on restaurants.{% endblock %}
-	{% block og_description %}Create groups for voting on restaurants.{% endblock %}
-</head>
+{% block author %}Clarinda{% endblock %}
+{% block title %}: Create Group{% endblock %}
+{% block og_title %}: Create Group{% endblock %}
+{% block description %}Create groups for voting on restaurants.{% endblock %}
+{% block og_description %}Create groups for voting on restaurants.{% endblock %}
 
 {% block body %}
-<body>
 	<form action="/load_cuisine.php">
 		Location: <input type="text" name="location" placeholder="10001"><br>
 	</form>
@@ -23,7 +20,9 @@
 			{{  }}
 		{% endfor %}
 	</form>
-</body>
+	
+	<p class="creategroup_text">Group Code</p>
+	<p class="creategroup_groupcode">{{ crew_id }}</p>
 {% endblock %}
 
 </html>

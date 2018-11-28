@@ -5,7 +5,7 @@
 <head>
 	<!-- CSS stylesheet -->
 	<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" type="text/css">
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans+KR" rel="stylesheet">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans+KR">
 	<link rel="shortcut icon" href="">
 	
 	<!-- navigation bar -->
@@ -15,6 +15,7 @@
 		<a href="/group/create">Create Group</a>
 	</div>
 
+	<!-- character set -->
 	<meta charset="utf-8"/>
 	
 	<!-- page author -->
@@ -22,20 +23,23 @@
 	
 	<!-- page title -->
 	<title>Eaterank{% block title %}{% endblock %}</title>
-	<meta property="og:title" content="Eaterank:{% block og_title%}{% endblock %}"/>
+	<meta property="og:title" content="Eaterank{% block og_title%}{% endblock %}"/>
 	
 	<!-- page description -->
 	<meta name="description" content="{% block description %}Eaterank is a web application that allows groups of people to avoid the frustrations of trying to figure out a place to eat. Groups can vote &#147;yes&#148; or &#147;no&#148; to an auto-generated list of restaurants based on an inputted location and selected cuisine type. After the last suggested restaurant, Eaterank will display the restaurant that received the most votes with additional details &#40;address, phone number, etc.&#41;.{% endblock %}"/>
 	<meta property="og:description" content="{% block og_description %}Eaterank is a web application that allows groups of people to avoid the frustrations of trying to figure out a place to eat. Groups can vote &#147;yes&#148; or &#147;no&#148; to an auto-generated list of restaurants based on an inputted location and selected cuisine type. After the last suggested restaurant, Eaterank will display the restaurant that received the most votes with additional details &#40;address, phone number, etc.&#41;.{% endblock %}"/>
 	
-	<!-- page logo -->
-	<meta property="og:image" content="/static/logo.png"/>
+	<!-- page logo
+	<meta property="og:image" content="{{ url_for('static', filename='logo.png') }}"/>
+	-->
 	
 	<!-- page type -->
 	<meta property=”og:type” content=”website”/>
 </head>
 
+<body style="background: url({{ url_for('static', filename='img/Background.jpg') }});">
 {% block body %}
 {% endblock %}
+</body>
 
 </html>
