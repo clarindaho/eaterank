@@ -1,12 +1,27 @@
 <!DOCTYPE html>
-
 <html lang="en">
-
 <head>
-	{% extends "base.html" %}
+  	{% extends "base.html" %}
+	<title>Eaterank</title>
+	<link href="{{url_for('static', filename='style.css')}}" rel="stylesheet" type="text/css">
+	<link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR" rel="stylesheet">
+	<link rel="shortcut icon" href="">
 </head>
-
-<body>
+<body style="background: url({{url_for('static', filename='img/Background.jpg')}});">
+		<div class="main">
+			<h1 class="title">Welcome to Eaterank</h1>
+			<div class="content">
+				<a href="">
+					<div class="button"; style="float: left;"> 
+					<p style="margin-top: 30%;"> Create a Group </p> 
+					</div>
+				</a>
+				<a href="">
+					<div class="button"; style="float:right;"> 
+						<p style="margin-top: 25%;">Join an Existing Group</p> 
+					</div>
+				</a>
+			</div>
+		</div>
 </body>
-
 </html>
