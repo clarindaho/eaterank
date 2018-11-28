@@ -96,8 +96,10 @@ def waiting():
 		for r in restaurants:
 			restaurant_params = (r.name, r.cuisine, r.address, r.rating, r.price_range, r.menu_url)
 			#Database stuff
-			sql_execute(INSERT_RESTAURANT, restaurant_params)
-			restaurant_id = sql_query(GET_LAST_INSERT_ID)
+			restaurant_id = sql_query(RESTAURANT_EXISTS, params=r.address)
+			if restaurant_id == None:
+				sql_execute(INSERT_RESTAURANT, restaurant_params)
+				restaurant_id = sql_query(GET_LAST_INSERT_ID)
 			vote_params = (crew_id, restaurant_id)
 			sql_execute(INSERT_VOTE, vote_params)
 
@@ -185,7 +187,7 @@ def vote_for():
 					selected_restaurantID = sql_query(GET_CREW_SELECTED_REST, params=crew_id)[0]
 					if selected_restaurantID != None:
 						restaurant = sql_query(GET_RESTID_INFO, params=selected_restaurantID)[0]
-						return render_template('results.html', page = page, crew_id = crew_id, restaurant = restaurant)
+						return render_template('results.html', page = page, restaurant = restaurant)
 					sleep(5)
 
 # user votes against restaurant - proceed to next restaurant or wait for results to appear
@@ -213,7 +215,7 @@ def vote_against():
 					selected_restaurantID = sql_query(GET_CREW_SELECTED_REST, params=crew_id)[0]
 					if selected_restaurantID != None:
 						restaurant = sql_query(GET_RESTID_INFO, params=selected_restaurantID)[0]
-						return render_template('results.html', page = page, crew_id = crew_id, restaurant = restaurant)
+						return render_template('results.html', page = page, restaurant = restaurant)
 					sleep(5)
 
 # finds the selected restaurant after the group leader requests results
@@ -228,7 +230,12 @@ def end_voting():
 		selected_restaurantID = sql_query(SELECTED_RESTAURANT, params=crew_id)
 		sql_execute(UPDATE_CREW_SELECTED_RESTAURANT, (selected_restaurantID, crew_id))
 		restaurant = sql_query(GET_RESTID_INFO, params=selected_restaurantID)[0]
-		return render_template('results.html', page = page, crew_id = crew_id, restaurant = restaurant)
+		# remove crew-related info from the database
+		voteIDS = sql_execute(GET_CREW_VOTES, params=crew_id)
+		for voteID in voteIDs:
+			sql_execute(DELETE_CREW_VOTES, params=voteID)
+		sql_execute(DELETE_CREW, params=crew_id)
+		return render_template('results.html', page = page, restaurant = restaurant)
 
 if __name__ == '__main__':
 	app.run(**config['app'])
