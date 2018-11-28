@@ -1,22 +1,22 @@
-import configparser
+# Import libraries
 from flask import Flask, render_template, request, session
-import mysql.connector
 from time import sleep
 
+import configparser
+import mysql.connector
+import queries
 
 from zomato import *
 from restaurant import restaurant
 
-import queries
-
-# Read configuration from file.
+# Read configuration from file
 config = configparser.ConfigParser()
 config.read('config.ini')
 
-# Set up application server.
+# Set up application server
 app = Flask(__name__)
 
-# Create a function for fetching data from the database.
+# Create a function for fetching data from the database
 def sql_query(sql, params = None):
     db = mysql.connector.connect(**config['mysql.connector'])
     cursor = db.cursor()
@@ -34,14 +34,15 @@ def sql_execute(sql, params):
     cursor.close()
     db.close()
 
-# Home Page
+# Home page
 @app.route('/')
+@app.route('/home')
 @app.route('/index')
 def index():
 	return render_template('index.html')
 
 
-# Create Group Page
+# Create group page
 @app.route('/group/create')
 def create_group():
 	sql_execute(INSERT_CREW)
@@ -119,7 +120,7 @@ def join_group():
 		'description': 'Join existing groups for voting on restaurants.'
 	}
 
-	return render_template('joingroup.html', page=page)
+	return render_template('joingroup.html')
 
 @app.route('/voting', methods = ["GET", "POST"])
 def wait_user():

@@ -55,13 +55,32 @@ p{
 	text-align: center;
 }
 
-.content{
+.content {
 	width: 100%;
 	height: 100%;
 	margin: 10;
 }
 
-.content a{
+.content a {
+	width: 25%;
+	height: 40%;
+	margin: 5% 10% 5% 10%;
+	
+	border: 2px solid var(--grey);
+	border-radius: 10px;
+	
+	background-color: var(--grey);
+	align-self: center;
+	
+	text-align: center;
+	font-size: 32px;
+	font-size-adjust: 0.58;
+}
+
+.content a:hover {
+	border: 2px solid var(--light_grey);
+	background-color: var(--light_grey);
+	color: black;
 }
 
 /* End Home Page */
@@ -112,25 +131,4 @@ p{
 .restaurant_description{
 	font-size: 14px;
 	color: var(--light_grey);
-}
-
-/* Button Properties */
-
-.button{
-	background-color: var(--grey);
-	text-align: center;
-	align-self: center;
-	border: 2px solid var(--grey);
-	border-radius: 10px;
-	font-size: 32px;
-	font-size-adjust: 0.58;
-	width: 25%;
-	height: 40%;
-	margin: 5% 10% 5% 10%;
-}
-
-.button:hover{
-	color: black;
-	background-color: var(--light_grey);
-	border: 2px solid var(--light_grey);
 }
