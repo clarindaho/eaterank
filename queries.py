@@ -23,6 +23,7 @@ GET_CREW_SELECTED_REST = ("SELECT selected_restaurant"
 
 SELECTED_RESTAURANT = ("SELECT restaurant_id"
                         "FROM vote"
+                        "WHERE crew_id = %s"
                         "GROUP BY restaurant_id"
                         "HAVING MAX(vote_num)")
 UPDATE_CREW_SELECTED_RESTAURANT = ("UPDATE crew"
