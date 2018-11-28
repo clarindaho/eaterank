@@ -18,14 +18,13 @@
 }
 
 html, body{
+	padding: 0;
+	margin: 0;
+
 	font-weight: 100;
 	font-family: 'Noto Sans KR', sans-serif;
 }
-/*
-body{
-	background: url('{{url_for('/', filename='Background.jpg')}}') fixed center;
-}
-*/
+
 a{
 	text-decoration-style: none;
 	text-decoration-line: none;
@@ -42,15 +41,18 @@ p{
 	font-weight: 100;
 }
 
-.main {
+/* Home Page */
+
+.home {
 	align-self: center;
 	margin: 5% 10% 5% 10%;
 	position: fixed;
-	text-align: center;
-	background-color: rgba(0, 0, 0, 0.5);
 	height: 80%;
 	width: 80%;
-
+	
+	background-color: rgba(0, 0, 0, 0.5);
+	
+	text-align: center;
 }
 
 .content{
@@ -58,6 +60,40 @@ p{
 	height: 100%;
 	margin: 10;
 }
+
+.content a{
+}
+
+/* End Home Page */
+
+/* Navigation Bar */
+
+.navigation {
+	overflow: hidden;
+	background-color: black;
+}
+
+.navigation a {
+	float: right;
+	padding: 14px 16px;
+	
+	color: var(--white);
+	text-align: center;
+	font-size: 17px;
+	text-decoration: none;
+}
+
+.navigation a:hover {
+	background-color: var(--light_grey);
+	color: black;
+}
+
+.navigation a.nav_home {
+	float: left;
+	background-color: var(--navy);
+}
+
+/* End Navigation Bar */
 
 .main.vote {
 	
@@ -77,6 +113,8 @@ p{
 	font-size: 14px;
 	color: var(--light_grey);
 }
+
+/* Button Properties */
 
 .button{
 	background-color: var(--grey);

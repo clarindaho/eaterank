@@ -34,28 +34,20 @@ def sql_execute(sql, params):
     cursor.close()
     db.close()
 
+# Home Page
 @app.route('/')
-
 @app.route('/index')
 def index():
-	page = {'author': 'Seohyun'}
-
-	return render_template('index.html', page=page)
+	return render_template('index.html')
 
 
-# Group Leader:
+# Create Group Page
 @app.route('/group/create')
 def create_group():
-	page = {
-		'author': 'Clarinda',
-		'title': 'Eaterank: Create Group',
-		'description': 'Create groups for voting on restaurants.'
-	}
-
 	sql_execute(INSERT_CREW)
 	crew_id = sql_query(GET_LAST_INSERT_ID)
 
-	return render_template('creategroup.html', page=page, crew_id = crew_id)
+	return render_template('creategroup.html', crew_id=crew_id)
 
 @app.route('/zipcode', methods=["GET", "POST"])
 def set_zipcode():
@@ -237,5 +229,6 @@ def end_voting():
 		sql_execute(DELETE_CREW, params=crew_id)
 		return render_template('results.html', page = page, restaurant = restaurant)
 
+# Main Method
 if __name__ == '__main__':
 	app.run(**config['app'])
