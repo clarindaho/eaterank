@@ -44,7 +44,7 @@ p {
 .home {
 	align-self: center;
 	position: fixed;
-	margin: 5% 10% 5% 10%;
+	margin: 3% 10% 5% 10%;
 	height: 80%;
 	width: 80%;
 	
@@ -80,6 +80,7 @@ p {
 	
 	text-align: center;
 	font-size: 32px;
+	font-size: 2.5vw;
 	font-size-adjust: 0.58;
 }
 
@@ -118,7 +119,7 @@ p {
 .error {
 	align-self: center;
 	position: fixed;
-	margin: 5% 10% 5% 10%;
+	margin: 3% 10% 5% 10%;
 	height: 80%;
 	width: 80%;
 	
