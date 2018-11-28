@@ -1,6 +1,7 @@
 import configparser
 from flask import Flask, render_template, request, session
 import mysql.connector
+from time import sleep
 
 
 from zomato import *
@@ -156,8 +157,9 @@ def wait_user():
 					vote_started = result[0]
 					if vote_started:
 						restaurants = sql_query(GET_RESTAURANT_IDS, params=crew_id)
-                        restaurant = sql_query(GET_RESTID_INFO, restaurants[0])
+                        restaurant = sql_query(GET_RESTID_INFO, params=restaurants[0])
 						return render_template('voting.html', page = page, crew_id = crew_id, restaurant=restaurant, index=0, group_leader= False)
+                    sleep(5)
 
 @app.route('/votefor', methods = ["GET", "POST"])
 def vote_for():
@@ -168,13 +170,13 @@ def vote_for():
         form = request.form
 		crew_id = form["crew_id"]
         restaurant_id = form["restaurant_id"]
-        vote_num = sql_query(GET_VOTE_NUM, (crew_id, restaurant_id))[0]
+        vote_num = sql_query(GET_VOTE_NUM, params=(crew_id, restaurant_id))[0]
         sql_execute(UPDATE_VOTE_COUNT, (vote_num + 1, crew_id, restaurant_id))
         index = form["index"] + 1
         restaurants = sql_query(GET_RESTAURANT_IDS, params=crew_id)
         group_leader = form["group_leader"]
         if index < len(restaurants) - 1:
-            restaurant = sql_query(GET_RESTID_INFO, restaurants[index])
+            restaurant = sql_query(GET_RESTID_INFO, params=restaurants[index])
             return render_template('voting.html', page = page, crew_id = crew_id, restaurant=restaurant, index=index, group_leader=group_leader)
         else:
             if group_leader:
@@ -186,7 +188,9 @@ def vote_for():
                     if selected_restaurantID != None:
                         restaurant = sql_query(GET_RESTID_INFO, params=selected_restaurantID)[0]
                         return render_template('results.html', page = page, crew_id = crew_id, restaurant = restaurant)
+                    sleep(5)
 
+# user votes against restaurant - proceed to next restaurant or wait for results to appear
 @app.route('/voteagainst', methods = ["GET", "POST"])
 def vote_against():
     page = {'author': 'hello'}
@@ -199,7 +203,7 @@ def vote_against():
         restaurants = sql_query(GET_RESTAURANT_IDS, params=crew_id)
         group_leader = form["group_leader"]
         if index < len(restaurants) - 1:
-            restaurant = sql_query(GET_RESTID_INFO, restaurants[index])
+            restaurant = sql_query(GET_RESTID_INFO, params=restaurants[index])
             return render_template('voting.html', page = page, crew_id = crew_id, restaurant=restaurant, index=index, group_leader=group_leader)
         else:
             if group_leader:
@@ -212,6 +216,21 @@ def vote_against():
                     if selected_restaurantID != None:
                         restaurant = sql_query(GET_RESTID_INFO, params=selected_restaurantID)[0]
                         return render_template('results.html', page = page, crew_id = crew_id, restaurant = restaurant)
+                    sleep(5)
+
+# finds the selected restaurant after the group leader requests results
+@app.route('/endvoting', methods = ["GET", "POST"])
+def end_voting():
+    page = {'author': 'hello'}
+	if request.method == "GET":
+		return redirect(url_for("index"))
+	if request.method == "POST":
+        form = request.form
+        crew_id = form["crew_id"]
+        selected_restaurantID = sql_query(SELECTED_RESTAURANT, params=crew_id)
+        sql_execute(UPDATE_CREW_SELECTED_RESTAURANT, (selected_restaurantID, crew_id))
+        restaurant = sql_query(GET_RESTID_INFO, params=selected_restaurantID)[0]
+        return return render_template('results.html', page = page, crew_id = crew_id, restaurant = restaurant)
 
 if __name__ == '__main__':
     app.run(**config['app'])
