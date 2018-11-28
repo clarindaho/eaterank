@@ -4,7 +4,7 @@ from time import sleep
 
 import configparser
 import mysql.connector
-import queries
+from queries import *
 
 from zomato import *
 from restaurant import restaurant
@@ -49,7 +49,7 @@ def index():
 # Create group page
 @app.route('/group/create', methods=["GET", "POST"])
 def create_group():
-	sql_execute(INSERT_CREW)
+	sql_execute(INSERT_CREW, params=None)
 	crew_id = sql_query(GET_LAST_INSERT_ID)
 
 	return render_template('creategroup.html', crew_id=crew_id)
@@ -96,7 +96,7 @@ def waiting():
 			restaurant_id = sql_query(RESTAURANT_EXISTS, params=r.address)
 			if restaurant_id == None:
 				sql_execute(INSERT_RESTAURANT, restaurant_params)
-				restaurant_id = sql_query(GET_LAST_INSERT_ID)
+				restaurant_id = sql_query(GET_LAST_INSERT_ID, params=None)
 			vote_params = (crew_id, restaurant_id)
 			sql_execute(INSERT_VOTE, vote_params)
 
