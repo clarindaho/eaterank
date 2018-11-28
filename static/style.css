@@ -21,11 +21,11 @@ html, body{
 	font-weight: 100;
 	font-family: 'Noto Sans KR', sans-serif;
 }
-
+/*
 body{
-	background: url("../res/Background.jpg") fixed center;
+	background: url('{{url_for('/', filename='Background.jpg')}}') fixed center;
 }
-
+*/
 a{
 	text-decoration-style: none;
 	text-decoration-line: none;
