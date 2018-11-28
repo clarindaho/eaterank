@@ -17,6 +17,10 @@ GET_CREW_VOTING = ("SELECT vote_started"
                     "FROM crew"
                     "WHERE crew_id=%s")
 
+GET_CREW_SELECTED_REST = ("SELECT selected_restaurant"
+                            "FROM crew"
+                            "WHERE crew_id=%s")
+
 SELECTED_RESTAURANT = ("SELECT restaurant_id"
                         "FROM vote"
                         "GROUP BY restaurant_id"
