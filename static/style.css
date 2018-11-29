@@ -157,6 +157,15 @@ input[type=text] {
 /* Create Group Page */
 
 .create_group {
+	align-self: center;
+	position: fixed;
+	margin: 3% 10% 5% 10%;
+	height: 80%;
+	width: 80%;
+	
+	background-color: rgba(0, 0, 0, 0.5);
+	
+	text-align: center;
 }
 
 
