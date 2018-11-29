@@ -36,6 +36,38 @@ p {
 	text-align: center;
 }
 
+/*Global Stuff*/
+
+.button{
+	align-self: center;
+	margin: 5% 10% 5% 10%;
+	width: 25%;
+	height: 40%;
+	
+	border: 2px solid var(--grey);
+	border-radius: 10px;
+	
+	background-color: var(--grey);
+	
+	text-align: center;
+	font-size: 32px;
+	font-size: 2.5vw;
+	font-size-adjust: 0.58;
+}
+
+.button:hover{
+	border: 2px solid var(--light_grey);
+	background-color: var(--light_grey);
+	color: black;
+}
+
+input[type=text] {
+	width: 25%;
+	padding-top: 12px;
+}
+
+/*Global Stuff End*/
+
 /* Home Page */
 
 .home {
@@ -62,29 +94,6 @@ p {
 	margin: 10;
 	width: 100%;
 	height: 100%;
-}
-
-.home_content a {
-	align-self: center;
-	margin: 5% 10% 5% 10%;
-	width: 25%;
-	height: 40%;
-	
-	border: 2px solid var(--grey);
-	border-radius: 10px;
-	
-	background-color: var(--grey);
-	
-	text-align: center;
-	font-size: 32px;
-	font-size: 2.5vw;
-	font-size-adjust: 0.58;
-}
-
-.home_content a:hover {
-	border: 2px solid var(--light_grey);
-	background-color: var(--light_grey);
-	color: black;
 }
 
 /* End Home Page */

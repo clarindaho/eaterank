@@ -1,26 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-	<title>Eaterank</title>
-	<link href="{{url_for('static', filename='style.css')}}" rel="stylesheet" type="text/css">
-	<link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR" rel="stylesheet">
-	<link rel="shortcut icon" href="">
-</head>
-<body style="background: url({{url_for('static', filename='img/Background.jpg')}});">
-		<div class="main">
-			<h1 class="title">{restaurant['name']}</h1>
-			<div class="content" style="color: white;">
-				<!--Need to add image-->
-				cusine type: {restaurant['cuisine']}<br>
-				address: {restaurant['address']}<br>
-				phone number: {restaurant['phone_num']}<br>
-			</div>
-			<form action="{{url_for('vote_for')}}" method='post'>
-				<button type="button">Good</button>
-			</form>
-			<form action="{{url_for('vote_against')}}" method='post'>
-				<button type="button">Bad</button>
-			</form>
+{% extends "base.html" %}
+
+{% block author %}Seohyun{% endblock %}
+{% block title %}{% endblock %}
+{% block og_title %}{% endblock %}
+{% block description %}{{ super() }}{% endblock %}
+{% block og_description %}{{ super() }}{% endblock %}
+
+{% block body %}
+	<div class="home">
+		<h1 class="home_title">{restaurant['name']}</h1>
+		<div class="content" style="color: white;">
+			<!--Need to add image-->
+			cusine type: {restaurant['cuisine']}<br>
+			address: {restaurant['address']}<br>
+			phone number: {restaurant['phone_num']}<br>
 		</div>
-</body>
+		<form action="{{url_for('vote_for')}}" method='post' style="float: left;">
+			<input type="submit" value="Good"
+				style="">
+		</form>
+		<form action="{{url_for('vote_against')}}" method='post' style="float: right;">
+			<input type="submit" value="Bad"
+				style="">
+		</form>
+	</div>
+{% endblock %}
 </html>
