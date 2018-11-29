@@ -31,8 +31,10 @@ def sql_execute(sql, params):
     cursor = db.cursor()
     cursor.execute(sql, params)
     db.commit()
+    insert_id = cursor.lastrowid
     cursor.close()
     db.close()
+    return insert_id
 	
 # Error page
 @app.errorhandler(404)
@@ -49,8 +51,7 @@ def index():
 # Create group page
 @app.route('/group/create', methods=["GET", "POST"])
 def create_group():
-	sql_execute(INSERT_CREW, params=None)
-	crew_id = sql_query(GET_LAST_INSERT_ID)
+	crew_id = sql_execute(INSERT_CREW, params=None)
 	
 	if request.method == "GET":	
 		return render_template('creategroup.html')
@@ -120,8 +121,7 @@ def waiting():
 			#Database stuff
 			restaurant_id = sql_query(RESTAURANT_EXISTS, params=r.address)
 			if restaurant_id == None:
-				sql_execute(INSERT_RESTAURANT, restaurant_params)
-				restaurant_id = sql_query(GET_LAST_INSERT_ID, params=None)
+				restaurant_id = sql_execute(INSERT_RESTAURANT, restaurant_params)
 			vote_params = (crew_id, restaurant_id)
 			sql_execute(INSERT_VOTE, vote_params)
 
