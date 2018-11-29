@@ -1,28 +1,29 @@
-Install virtual environment by running:
+1. Install virtual environment by running
 sudo apt install virtualenv
 
-Create virtual environment named flask:
+2. Create virtual environment named flask
 virtualenv flask
 
-To activate virtual environment:
+3. Activate virtual environment
 cd flask
 source bin/activate
 
-Next, install flask on virtual environment:
+4. Install flask on virtual environment
 pip install flask
 
-Install mysql connector:
+5. Install mysql connector:
 pip install mysql-connector
 
+6. Create database on local machine
 mysql -u root -p
-source setup.sql // this will create the database for you
-
-cd to project directory and use the following command to run webpage
-python 'classname'.py
-
-**if you run into error 'no module named configparser':
-pip install configparser****
+source setup.sql
 
 To deactivate virtual environment:
 deactivate
 
+*** Potential error solutions ***
+'no module named configparser':
+pip install configparser
+'caching sha_2_password cannot be loaded'
+if using MySQL on Windows, set the user authentication method to standard
+*********************************
