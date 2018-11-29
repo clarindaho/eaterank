@@ -3,39 +3,43 @@
 <html lang="en">
 
 <head>
+	<!-- CSS stylesheet -->
+	<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" type="text/css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans+KR">
+	<link rel="shortcut icon" href="">
+	
+	<!-- navigation bar -->
+	<div class="navigation">
+		<a class="nav_home" href="/home">Home</a>
+		<a href="/group/join">Join Group</a>
+		<a href="/group/create">Create Group</a>
+	</div>
+
+	<!-- character set -->
 	<meta charset="utf-8"/>
 	
 	<!-- page author -->
-	{% if page.author %}
-	<meta name="author" content="{{ page.author }}"/>
-	{% endif %}
+	<meta name="author" content="{% block author %}{% endblock %}"/>
 	
 	<!-- page title -->
-	{% if page.title %}
-	<title>Eaterank: {{ page.title }}</title>
-	<meta property="og:title" content="Eaterank: {{ page.title }}"/>
-	{% else %}
-	<title>Eaterank</title>
-	<meta property="og:title" content="Eaterank"/>
-	{% endif %}
+	<title>Eaterank{% block title %}{% endblock %}</title>
+	<meta property="og:title" content="Eaterank{% block og_title%}{% endblock %}"/>
 	
 	<!-- page description -->
-	{% if page.description %}
-	<meta name="description" content="{{ page.description }}"/>
-	<meta property="og:description" content="{{ page.description }}"/>
-	{% else %}
-	<meta name="description" content="Eaterank is a web application that allows groups of people to avoid the frustrations of trying to figure out a place to eat. Groups can vote &#147;yes&#148; or &#147;no&#148; to an auto-generated list of restaurants based on an inputted location and selected cuisine type. After the last suggested restaurant, Eaterank will display the restaurant that received the most votes with additional details &#40;address, phone number, etc.&#41;."/>
-	<meta property="og:description" content="Eaterank is a web application that allows groups of people to avoid the frustrations of trying to figure out a place to eat. Groups can vote &#147;yes&#148; or &#147;no&#148; to an auto-generated list of restaurants based on an inputted location and selected cuisine type. After the last suggested restaurant, Eaterank will display the restaurant that received the most votes with additional details &#40;address, phone number, etc.&#41;."/>
-	{% endif %}
+	<meta name="description" content="{% block description %}Eaterank is a web application that allows groups of people to avoid the frustrations of trying to figure out a place to eat. Groups can vote &#147;yes&#148; or &#147;no&#148; to an auto-generated list of restaurants based on an inputted location and selected cuisine type. After the last suggested restaurant, Eaterank will display the restaurant that received the most votes with additional details &#40;address, phone number, etc.&#41;.{% endblock %}"/>
+	<meta property="og:description" content="{% block og_description %}Eaterank is a web application that allows groups of people to avoid the frustrations of trying to figure out a place to eat. Groups can vote &#147;yes&#148; or &#147;no&#148; to an auto-generated list of restaurants based on an inputted location and selected cuisine type. After the last suggested restaurant, Eaterank will display the restaurant that received the most votes with additional details &#40;address, phone number, etc.&#41;.{% endblock %}"/>
 	
-	<!-- page logo -->
-	<meta property="og:image" content="/static/logo.png"/>
+	<!-- page logo
+	<meta property="og:image" content="{{ url_for('static', filename='logo.png') }}"/>
+	-->
 	
 	<!-- page type -->
 	<meta property=”og:type” content=”website”/>
 </head>
 
-<body>
+<body style="background: url({{ url_for('static', filename='img/Background.jpg') }});">
+{% block body %}
+{% endblock %}
 </body>
 
 </html>
