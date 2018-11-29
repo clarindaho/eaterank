@@ -58,5 +58,3 @@ GET_CREW_VOTES = ("SELECT vote_id"
 
 DELETE_CREW_VOTES = ("DELETE FROM vote"
                     "WHERE vote_id=%s")
-
-GET_LAST_INSERT_ID = ("SELECT LAST_INSERT_ID()")
