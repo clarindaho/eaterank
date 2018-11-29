@@ -4,7 +4,7 @@
 
 -- create database and user and grant privileges to user
 create database eaterank_project;
-create user 'mysql_username'@'localhost' identified by 'mysql_password';
+create user 'mysql_username'@'localhost' identified with mysql_native_password by 'mysql_password';
 grant all on eaterank_project.* to 'mysql_username'@'localhost';
 flush privileges;
 

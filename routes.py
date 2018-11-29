@@ -51,8 +51,33 @@ def index():
 def create_group():
 	sql_execute(INSERT_CREW, params=None)
 	crew_id = sql_query(GET_LAST_INSERT_ID)
+	
+	if request.method == "GET":	
+		return render_template('creategroup.html')
+		
+	if request.method == "POST":
+		form = request.form
+		
+		zipcode = form["zipcode"]
+		cuisines = getCuisinesZip(zipcode)
+		
+		cuisine_names = get_cuisine_names(cuisines)
+		
+		selected_cuisines = []
+		for cuisine_name in cuisine_names:
+			selected_cuisines.append(form[cuisine_name])
+		
+		return render_template('creategroup.html', cuisines=cuisine_names)
 
-	return render_template('creategroup.html', crew_id=crew_id)
+# Returns an array of cuisines without the ID
+def get_cuisine_names(cuisines):
+	cuisine_names = []
+	
+	for cuisine in cuisines:
+		cuisine_name, cuisine_id = cuisine
+		cuisine_names.append(cuisine_name)
+		
+	return cuisine_names
 
 @app.route('/zipcode', methods=["GET", "POST"])
 def set_zipcode():
