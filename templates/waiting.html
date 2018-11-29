@@ -1,19 +1,29 @@
 <!DOCTYPE html>
+
 <html lang="en">
+
 {% extends "base.html" %}
 
 {% block author %}Seohyun{% endblock %}
-{% block title %}{% endblock %}
-{% block og_title %}{% endblock %}
-{% block description %}{{ super() }}{% endblock %}
-{% block og_description %}{{ super() }}{% endblock %}
+{% block title %}: Waiting Room{% endblock %}
+{% block og_title %}: Waiting Room{% endblock %}
+{% block description %}Waiting for people to join existing groups for voting on restaurants.{% endblock %}
+{% block og_description %}Waiting for people to join existing groups for voting on restaurants.{% endblock %}
 
 {% block body %}
 	<div class="home">
 		<h1 class="home_title"></h1>
-		<div class="content">
-							
+		<div class="home_content">
+			<p>Group Code: {{ crew_id }}</p>
+			<p>Waiting for people to join...</p>
+			
+			{% if group_leader %}
+			<form action="/voting/start/{{ crew_id }}/1" method="POST">
+				<br><input type="submit" class="button" value="Start Voting">
+			</form>
+			{% endif %}
 		</div>
 	</div>
 {% endblock %}
+
 </html>
