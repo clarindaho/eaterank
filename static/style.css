@@ -49,6 +49,7 @@ p {
 	
 	background-color: var(--grey);
 	
+	color: var(--white);
 	text-align: center;
 	font-size: 32px;
 	font-size: 2.5vw;
@@ -83,11 +84,18 @@ input[type=text] {
 }
 
 .home_title {
-	margin-top: 5;
+	margin-top: 5%;
 	
 	color: var(--white);		
 	font-size: 50px;
 	font-weight: 100;
+}
+
+.home_text {
+	text-align: center;
+	color: var(--white);		
+	font-size: 20px;
+	font-weight: 35;
 }
 
 .home_content {
@@ -120,31 +128,10 @@ input[type=text] {
 
 /* End Navigation Bar */
 
-/* Error Page */
+/* Create Group Page */
 
-.error {
-	align-self: center;
-	position: fixed;
-	margin: 3% 10% 5% 10%;
-	height: 80%;
-	width: 80%;
-	
-	background-color: rgba(0, 0, 0, 0.5);
-	
-	text-align: left;
-}
-
-.error_title {
-	margin-top: 5%;
-	margin-left: 5%;
-	
-	color: var(--white);		
-	font-size: 50px;
-	font-weight: 100;
-}
-
-.error_text {
-	margin-left: 5%;
+.creategroup_text {
+	margin-left: 40%;
 	
 	text-align: left;
 	color: var(--white);		
@@ -152,22 +139,36 @@ input[type=text] {
 	font-weight: 35;
 }
 
-/* End Error Page */
-
-/* Create Group Page */
-
-.create_group {
-	align-self: center;
-	position: fixed;
-	margin: 3% 10% 5% 10%;
-	height: 80%;
-	width: 80%;
+.creategroup_checklist {
+	margin-left: 5%;
 	
-	background-color: rgba(0, 0, 0, 0.5);
-	
-	text-align: center;
+	text-align: left;
+	color: var(--white);
+	font-size: 20px;
+	font-weight: 35;
 }
 
+.creategroup_submit{
+	margin-left: 0%
+	margin: 2% 10% 2% 10%;
+	width: 12%;
+	height: 20%;
+	
+	border: 2px solid var(--grey);
+	border-radius: 10px;
+	
+	background-color: var(--grey);
+	
+	color: var(--white);
+	text-align: center;
+	font-size: 16px;
+}
+
+.creategroup_submit:hover{
+	border: 2px solid var(--light_grey);
+	background-color: var(--light_grey);
+	color: black;
+}
 
 /* End Create Group Page */
 

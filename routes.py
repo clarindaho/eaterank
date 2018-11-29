@@ -168,14 +168,16 @@ def select_cuisine(zipcode):
 
 @app.route('/voting/waiting/<crew_id>/<group_leader>', methods=["GET", "POST"])
 def waiting(crew_id, group_leader):
+	start_voting_flag = 0
+
 	if request.method == "GET":
-		if (group_leader is "1"):
+		return render_template("waiting.html", crew_id=crew_id)
+
+	if request.method == "POST":
+		if (group_leader == "1"):
 			return render_template("waiting.html", crew_id=crew_id, group_leader=1)
 		else:
 			return render_template("waiting.html", crew_id=crew_id)
-
-	if request.method == "POST":
-		return redirect(url_for("start_voting", crew_id=crew_id, group_leader=1))
 
 @app.route('/voting/start/<crew_id>/<group_leader>', methods=["GET", "POST"])
 def start_voting(crew_id, group_leader):

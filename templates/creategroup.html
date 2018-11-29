@@ -15,7 +15,7 @@
 		<h1 class="home_title">Create New Group</h1>
 		<div class="home_content">
 			<!-- ZIP Code -->
-			<div class="creategroup_zipcode">
+			<div class="creategroup_text">
 				<form action="/group/create" method="POST">
 					Location: <input type="number" name="zipcode" placeholder={% if zipcode %}"{{ zipcode }}" disabled {% else %}"10001"{% endif %}><br>
 				</form>
@@ -24,17 +24,17 @@
 			<!-- Cuisine Types -->
 			{% if cuisines %}
 				<br>
-				<div class="creategroup_cuisine">
+				<div class="creategroup_text">
 					<form action="/group/create{% if zipcode %}/{{ zipcode }}{% endif %}" method="POST">
 						Cuisine Types:
+						
 						{% for cuisine in cuisines %}
 							<br>
 							<input type="checkbox" name="{{ cuisine }}" {% if selected_cuisines %}{%if cuisine in selected_cuisines %}checked{% endif %} disabled{% endif %}>
-							<span class="checkmark"></span>
 							<label class="cuisines">{{ cuisine }}</label>
 						{% endfor %}
 						
-						<br><input type="submit" class="submit" value="Submit" {% if selected_cuisines %}disabled{% endif %}>
+						<br><input type="submit" class="creategroup_submit" value="Submit" {% if selected_cuisines %}disabled{% endif %}>
 					</form>
 				</div>
 			{% endif %}
@@ -42,12 +42,13 @@
 			<!-- Group Code and Start Voting Button -->
 			{% if crew_id %}
 				<br>
-				<label class="creategroup_text">Group Code: </label>
-				<label class="creategroup_groupcode">{{ crew_id }}</label>
-				
-				<form action="/voting/waiting/{{ crew_id }}/1" method="GET">
-					<br><input type="submit" class="submit" value="Enter Voting Waiting Room">
-				</form>
+				<div class="creategroup_text">
+					<label>Group Code: {{ crew_id }}</label>
+					
+					<form action="/voting/waiting/{{ crew_id }}/1" method="POST">
+						<input type="submit" class="creategroup_submit" style="width: 30%;" value="Enter Voting Waiting Room">
+					</form>
+				</div>
 			{% endif %}
 		</div>
 	</div>
