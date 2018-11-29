@@ -32,9 +32,8 @@ create table restaurant(
     name varchar(255),
     cuisine varchar(255),
     address varchar(255),
-    phone_num varchar(255),
     rating float,
     price_range varchar(255),
-    image varchar(255),
+#    image varchar(255),
     menu_url varchar(255)
 );
