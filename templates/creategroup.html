@@ -11,32 +11,37 @@
 {% block og_description %}Create groups for voting on restaurants.{% endblock %}
 
 {% block body %}
+	{% if not cuisines %}
 	<!-- ZIP Code -->
 	<div class="creategroup_zipcode">
 		<form action="/group/create" method = "POST">
 			Location: <input type="text" name="zipcode" placeholder="10001"><br>
+			<input type="hidden" name="crew_id" value="{{crew_id}}">
+			<button type="submit">Submit</button>
 		</form>
 	</div>
+	{% endif %}
 	
 	<!-- Cuisine Types -->
 	{% if cuisines %}
 		<br>
 		<div class="creategroup_cuisine">
-			<form action="/group/create" type="checkbox" method="GET">
+			<form action="/waitingleader" type="checkbox" method="POST">
 				Cuisine Types: <br>
 				{% for cuisine in cuisines %}
-					<input type="checkbox" name="{{ cuisine }}">
+					<input type="checkbox" name="{{ cuisine[0] }}" value = "{{cuisine[1]}}">
 					<span class="checkmark"></span>
-					<label class="cuisines">{{ cuisine }}</label>
+					<label class="cuisines">{{ cuisine[0] }}</label>
 					<br>
 				{% endfor %}
+				<input type="hidden" name="crew_id" value="{{crew_id}}">
+				<input type="hidden" name="zipcode" value="{{zipcode}}">
+				<button type="submit">Submit</button>
 			</form>
-			
-			<a href="/group/create">Submit</a>
 		</div>
 	{% endif %}
 	
-	{% if crew_id %}
+	{% if not cuisines %}
 		<br>
 		<label class="creategroup_text">Group Code: </label>
 		<label class="creategroup_groupcode">{{ crew_id }}</label>

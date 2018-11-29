@@ -56,7 +56,7 @@ def create_group():
 	crew_id = sql_execute(INSERT_CREW, params=None)
 	
 	if request.method == "GET":	
-		return render_template('creategroup.html')
+		return render_template('creategroup.html', cuisines = False, crew_id = crew_id)
 		
 	if request.method == "POST":
 		form = request.form
@@ -64,13 +64,8 @@ def create_group():
 		zipcode = form["zipcode"]
 		cuisines = getCuisinesZip(zipcode)
 		
-		cuisine_names = get_cuisine_names(cuisines)
 		
-		selected_cuisines = []
-		for cuisine_name in cuisine_names:
-			selected_cuisines.append(form[cuisine_name])
-		
-		return render_template('creategroup.html', cuisines=cuisine_names)
+		return render_template('creategroup.html', cuisines=cuisines, crew_id = crew_id, zipcode = zipcode)
 
 # Returns an array of cuisines without the ID
 def get_cuisine_names(cuisines):
@@ -112,7 +107,7 @@ def waiting():
 			if (key == "zipcode"):
 				zipcode = form[key]
 			if (key == "crew_id"):
-				crew_id = form[key]
+				crew_id = int(form[key])
 			else:
 				c = (key, form[key])
 				cuisines.append(c)
@@ -121,9 +116,13 @@ def waiting():
 		for r in restaurants:
 			restaurant_params = (r.name, r.cuisine, r.address, r.rating, r.price_range, r.menu_url)
 			#Database stuff
-			restaurant_id = sql_query(RESTAURANT_EXISTS, params=r.address)
-			if restaurant_id == None:
+			print("ADDRESS" + str(r.address))
+			restaurant_id = sql_query(RESTAURANT_EXISTS, params=(r.address,))
+			print("RESTAURANT_ID: " + str(restaurant_id))
+			if restaurant_id == []:
+				print("CREW_ID: " + str(crew_id))
 				restaurant_id = sql_execute(INSERT_RESTAURANT, restaurant_params)
+				print("RESTAURANT_ID: " + str(restaurant_id))
 			vote_params = (crew_id, restaurant_id)
 			sql_execute(INSERT_VOTE, vote_params)
 
