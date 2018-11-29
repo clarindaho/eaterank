@@ -188,6 +188,7 @@ def start_voting(crew_id, group_leader):
 		sql_execute(UPDATE_CREW_VOTING, (True, crew_id))
 		restaurants = sql_query(GET_RESTAURANT_IDS, params=crew_id)
 		restaurant = sql_query(GET_RESTID_INFO, restaurants[0])
+		
 		return render_template('voting.html', crew_id = crew_id, restaurant=restaurant, index=0, group_leader= True)
 
 # Normal group members:
