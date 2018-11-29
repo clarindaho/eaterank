@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Eaterank</title>
+	<link href="{{url_for('static', filename='style.css')}}" rel="stylesheet" type="text/css">
+	<link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR" rel="stylesheet">
+	<link rel="shortcut icon" href="">
+</head>
+<body style="background: url({{url_for('static', filename='img/Background.jpg')}});">
+		<div class="main">
+			<h1 class="title">Joining New Group</h1>
+			<div class="content">
+				<form action="{{url_for('wait_user')}}" method="post">
+					<p>Enter Group Code</p> <!--Need to set color-->
+					<input type="text" name ="group_code"><br>
+				</form>
+				<a href="/">
+					<div style="float: left">
+						Return to Main
+					</div>
+				</a>
+			</div>
+		</div>
+</body>
+</html>
