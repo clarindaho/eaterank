@@ -166,18 +166,26 @@ def select_cuisine(zipcode):
 			
 			return render_template('creategroup.html', zipcode=zipcode, cuisines=cuisine_names, selected_cuisines=selected_cuisines, crew_id=crew_id)
 
-@app.route('/voting/waiting/<crew_id>/<group_leader>', methods=["GET", "POST"])
-def waiting(crew_id, group_leader):
+@app.route('/voting/waiting/<crew_id>', methods=["GET", "POST"])
+def waiting(crew_id):
 	start_voting_flag = 0
 
 	if request.method == "GET":
-		return render_template("waiting.html", crew_id=crew_id)
+		return redirect(url_for("index"))
 
 	if request.method == "POST":
-		if (group_leader == "1"):
-			return render_template("waiting.html", crew_id=crew_id, group_leader=1)
-		else:
-			return render_template("waiting.html", crew_id=crew_id)
+		return render_template("waiting.html", crew_id=crew_id, group_leader=1)
+
+@app.route('/voting/waiting', methods=["GET", "POST"])			
+def waiting_nongroupleader():
+	if request.method == "GET":
+		return redirect(url_for("index"))
+	
+	if request.method == "POST":
+		form = request.form
+		crew_id = form["group_code"]
+		
+		return render_template("waiting.html", crew_id=crew_id)
 
 @app.route('/voting/start/<crew_id>/<group_leader>', methods=["GET", "POST"])
 def start_voting(crew_id, group_leader):
@@ -198,7 +206,6 @@ def join_group():
 
 @app.route('/voting', methods = ["GET", "POST"])
 def wait_user():
-	page = {'author': 'hello'}
 	if request.method == "GET":
 		return redirect(url_for("index"))
 	if request.method == "POST":
@@ -216,7 +223,7 @@ def wait_user():
             # voting has already started for the group - inform user
 			if vote_started:
 				message = "Voting has already started. Sorry."
-				return render_template('joingroup.html', message = message, page = page)
+				return render_template('joingroup.html', message = message)
             # wait for group leader to begin the voting process for entire group
 			else:
 				while True:
@@ -225,7 +232,7 @@ def wait_user():
 					if vote_started:
 						restaurants = sql_query(GET_RESTAURANT_IDS, params=crew_id)
 						restaurant = sql_query(GET_RESTID_INFO, params=restaurants[0])
-						return render_template('voting.html', page = page, crew_id = crew_id, restaurant=restaurant, index=0, group_leader= False)
+						return render_template('voting.html', crew_id = crew_id, restaurant=restaurant, index=0, group_leader= False)
 					sleep(5)
 
 @app.route('/votefor', methods = ["GET", "POST"])
