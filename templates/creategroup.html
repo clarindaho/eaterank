@@ -13,8 +13,8 @@
 {% block body %}
 	<!-- ZIP Code -->
 	<div class="creategroup_zipcode">
-		<form action="/group/create" method = "POST">
-			Location: <input type="text" name="zipcode" placeholder="10001"><br>
+		<form action="/group/create" method="POST">
+			Location: <input type="number" name="zipcode" placeholder={% if zipcode %}"{{ zipcode }}" disabled {% else %}"10001"{% endif %}"><br>
 		</form>
 	</div>
 	
@@ -22,25 +22,34 @@
 	{% if cuisines %}
 		<br>
 		<div class="creategroup_cuisine">
-			<form action="/group/create" type="checkbox" method="GET">
-				Cuisine Types: <br>
+			<form action="/group/create/{% if zipcode %}{{ zipcode }}{% endif %}" method="POST">
+				Cuisine Types:
 				{% for cuisine in cuisines %}
-					<input type="checkbox" name="{{ cuisine }}">
+					<br>
+					<input type="checkbox" name="{{ cuisine }}" {% if selected_cuisines %}{%if cuisine in selected_cuisines %}checked{% endif %}{% endif %}>
 					<span class="checkmark"></span>
 					<label class="cuisines">{{ cuisine }}</label>
-					<br>
 				{% endfor %}
+				
+				<br><input type="submit" class="submit" value="Submit">
 			</form>
-			
-			<a href="/group/create">Submit</a>
 		</div>
 	{% endif %}
 	
+	<!-- Group Code -->
 	{% if crew_id %}
 		<br>
 		<label class="creategroup_text">Group Code: </label>
 		<label class="creategroup_groupcode">{{ crew_id }}</label>
+		
+		<form action="/voting/start" method="GET">
+		</form>
 	{% endif %}
+	
+	<!-- Start Voting Button -->
+	{% if flag %}
+		
+	{% endif%}
 {% endblock %}
 
 </html>

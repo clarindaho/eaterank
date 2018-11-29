@@ -1,5 +1,5 @@
 # Import libraries
-from flask import Flask, render_template, request, session
+from flask import Flask, redirect, render_template, request, session, url_for
 from time import sleep
 
 import configparser
@@ -26,15 +26,37 @@ def sql_query(sql, params = None):
     db.close()
     return result
 
+# Execute a SQL command
 def sql_execute(sql, params):
     db = mysql.connector.connect(**config['mysql.connector'])
     cursor = db.cursor()
     cursor.execute(sql, params)
     db.commit()
-    insert_id = cursor.lastrowid
+	insert_id = cursor.lastrowid
     cursor.close()
     db.close()
-    return insert_id
+	return insert_id
+	
+# Returns an array of cuisines without the ID
+def get_cuisine_names(cuisines):
+	cuisine_names = []
+	
+	for cuisine in cuisines:
+		cuisine_name, cuisine_id = cuisine
+		cuisine_names.append(cuisine_name)
+		
+	return cuisine_names
+
+# Returns a cuisine tuple (cuisine_name, cuisine_id) for a specified cuisine_name
+def get_cuisine_tuple(selected_cuisine_name, cuisines):
+	for cuisine in cuisines:
+		cuisine_name, cuisine_id = cuisine
+		if selected_cuisine_name == cuisine_name:
+			return cuisine
+			
+def format_crewid(crewid):
+	formatted_crewid = crewid[1:-1]
+	
 	
 # Error page
 @app.errorhandler(404)
@@ -51,50 +73,65 @@ def index():
 # Create group page
 @app.route('/group/create', methods=["GET", "POST"])
 def create_group():
-	crew_id = sql_execute(INSERT_CREW, params=None)
-	
-	if request.method == "GET":	
+	if request.method == "GET":
 		return render_template('creategroup.html')
 		
 	if request.method == "POST":
 		form = request.form
-		
 		zipcode = form["zipcode"]
-		cuisines = getCuisinesZip(zipcode)
 		
+		return redirect(url_for("select_cuisine", zipcode=zipcode))
+
+@app.route('/group/create/<zipcode>', methods=["GET", "POST"])
+def select_cuisine(zipcode):
+	if request.method == "GET":
+		cuisines = getCuisinesZip(zipcode)
 		cuisine_names = get_cuisine_names(cuisines)
+		
+		return render_template('creategroup.html', zipcode=zipcode, cuisines=cuisine_names)
+	
+	if request.method == "POST":
+		cuisines = getCuisinesZip(zipcode)
+		cuisine_names = get_cuisine_names(cuisines)
+	
+		form = request.form
 		
 		selected_cuisines = []
 		for cuisine_name in cuisine_names:
-			selected_cuisines.append(form[cuisine_name])
+			if form.get(cuisine_name) != None:
+				selected_cuisines.append(cuisine_name)
 		
-		return render_template('creategroup.html', cuisines=cuisine_names)
+		if len(selected_cuisines) == 0:
+			return redirect(url_for("index"))
+		else:
+			return redirect(url_for("display_groupid", zipcode=zipcode, selected_cuisines=selected_cuisines))
 
-# Returns an array of cuisines without the ID
-def get_cuisine_names(cuisines):
-	cuisine_names = []
-	
-	for cuisine in cuisines:
-		cuisine_name, cuisine_id = cuisine
-		cuisine_names.append(cuisine_name)
-		
-	return cuisine_names
-
-@app.route('/zipcode', methods=["GET", "POST"])
-def set_zipcode():
-	page = {'author': 'Jason'}
+@app.route('/group/create/<zipcode>/<selected_cuisines>', methods=["GET", "POST"])
+def display_groupid(zipcode, selected_cuisines):
 	if request.method == "GET":
-		return redirect(url_for("index"))
+		crew_id = sql_execute(INSERT_CREW, params=None)
+		
+		cuisines = getCuisinesZip(zipcode)
+		cuisine_names = get_cuisine_names(cuisines)
+		
+		formatted_selected_cuisines = ''.join(selected_cuisines)[1:-1]
+		array_selected_cuisines = []
+		print(formatted_selected_cuisines)
+		selected_cuisine = None
+		for char in formatted_selected_cuisines:
+			if char is '\'':
+				if selected_cuisine != None:
+					array_selected_cuisines.append(selected_cuisine)
+					selected_cuisine = None
+				else:
+					selected_cuisine = ""
+			elif char != ',' and selected_cuisine != None:
+				selected_cuisine += char
+					
+		return render_template('creategroup.html', zipcode=zipcode, cuisines=cuisine_names, selected_cuisines=selected_cuisines, crew_id=crew_id)
+	
 	if request.method == "POST":
-		form = request.form
-		crew_id = ""
-		if "crew_id" in form:
-			crew_id = form["crew_id"]
-		if "zipcode" in form:
-			#session["zipcode"] = form["zipcode"]
-			zipcode = form["zipcode"]
-			cuisines = getCuisinesZip(zipcode)
-			return render_template('selectcuisines.html', zipcode = zipcode, cuisines = cuisines, crew_id = crew_id, page=page)
+		return redirect(url_for("start_voting"))
 
 @app.route('/waitingleader', methods=["GET", "POST"])
 def waiting():
@@ -121,7 +158,7 @@ def waiting():
 			#Database stuff
 			restaurant_id = sql_query(RESTAURANT_EXISTS, params=r.address)
 			if restaurant_id == None:
-				restaurant_id = sql_execute(INSERT_RESTAURANT, restaurant_params)
+				restaurant_id = sql_execute(INSERT_RESTAURANT, params=restaurant_params)
 			vote_params = (crew_id, restaurant_id)
 			sql_execute(INSERT_VOTE, vote_params)
 
