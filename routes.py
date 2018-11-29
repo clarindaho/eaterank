@@ -20,6 +20,8 @@ app = Flask(__name__)
 def sql_query(sql, params = None):
     db = mysql.connector.connect(**config['mysql.connector'])
     cursor = db.cursor()
+    print(sql)
+    print(params)
     cursor.execute(sql, params)
     result = cursor.fetchall()
     cursor.close()
@@ -158,27 +160,29 @@ def wait_user():
 		return redirect(url_for("index"))
 	if request.method == "POST":
 		form = request.form
-		crew_id = form["crew_id"]
-		result = sql_query(GET_CREW, params=crew_id)
+		crew_id = int(form["crew_id"])
+		result = sql_query(GET_CREW, params=(crew_id,))
 		message = ""
         # invalid crew id
 		if result == []:
 			message = "You have entered an invalid crew id."
 			return render_template('joingroup.html', message = message, page = page)
 		else:
-			result = sql_query(GET_CREW_VOTING, params=crew_id)
-			vote_started = result[0]
+			result = sql_query(GET_CREW_VOTING, params=(crew_id,))
+			vote_started = bool(result[0][0])
             # voting has already started for the group - inform user
+			print("VOTE STARTED" + str(vote_started))
 			if vote_started:
 				message = "Voting has already started. Sorry."
 				return render_template('joingroup.html', message = message, page = page)
             # wait for group leader to begin the voting process for entire group
 			else:
 				while True:
-					result = sql_query(GET_CREW_VOTING, params=crew_id)
-					vote_started = result[0]
+					result = sql_query(GET_CREW_VOTING, params=(crew_id,))
+					vote_started = bool(result[0][0])
+					print("VOTE STARTED" + str(vote_started))
 					if vote_started:
-						restaurants = sql_query(GET_RESTAURANT_IDS, params=crew_id)
+						restaurants = sql_query(GET_RESTAURANT_IDS, params=(crew_id,))
 						restaurant = sql_query(GET_RESTID_INFO, params=restaurants[0])
 						return render_template('voting.html', page = page, crew_id = crew_id, restaurant=restaurant, index=0, group_leader= False)
 					sleep(5)
