@@ -28,13 +28,13 @@ def sql_query(sql, params = None):
 
 # Execute a SQL command
 def sql_execute(sql, params):
-    db = mysql.connector.connect(**config['mysql.connector'])
-    cursor = db.cursor()
-    cursor.execute(sql, params)
-    db.commit()
+	db = mysql.connector.connect(**config['mysql.connector'])
+	cursor = db.cursor()
+	cursor.execute(sql, params)
+	db.commit()
 	insert_id = cursor.lastrowid
-    cursor.close()
-    db.close()
+	cursor.close()
+	db.close()
 	return insert_id
 	
 # Returns an array of cuisines without the ID
@@ -53,10 +53,29 @@ def get_cuisine_tuple(selected_cuisine_name, cuisines):
 		cuisine_name, cuisine_id = cuisine
 		if selected_cuisine_name == cuisine_name:
 			return cuisine
-			
-def format_crewid(crewid):
-	formatted_crewid = crewid[1:-1]
+
+# Returns an array of selected cuisines		
+def format_selected_cuisine(selected_cuisines):
+	# Join all the characters in the array to a string
+	formatted_selected_cuisines = ''.join(selected_cuisines)[1:-1]
 	
+	# Parse through the string to put together which cuisines were selected
+	array_selected_cuisines = []
+	selected_cuisine = None
+	for char in formatted_selected_cuisines:
+		if char is '\'':
+			if selected_cuisine != None:
+				# End of a selected cuisine
+				array_selected_cuisines.append(selected_cuisine)
+				selected_cuisine = None
+			else:
+				# Beginning of a selected cuisine
+				selected_cuisine = ""
+		elif char != ',' and selected_cuisine != None:
+			# Build selected cuisine name
+			selected_cuisine += char
+	
+	return array_selected_cuisines
 	
 # Error page
 @app.errorhandler(404)
@@ -114,21 +133,9 @@ def display_groupid(zipcode, selected_cuisines):
 		cuisines = getCuisinesZip(zipcode)
 		cuisine_names = get_cuisine_names(cuisines)
 		
-		formatted_selected_cuisines = ''.join(selected_cuisines)[1:-1]
-		array_selected_cuisines = []
-		print(formatted_selected_cuisines)
-		selected_cuisine = None
-		for char in formatted_selected_cuisines:
-			if char is '\'':
-				if selected_cuisine != None:
-					array_selected_cuisines.append(selected_cuisine)
-					selected_cuisine = None
-				else:
-					selected_cuisine = ""
-			elif char != ',' and selected_cuisine != None:
-				selected_cuisine += char
+		array_selected_cuisines = format_selected_cuisine(selected_cuisines)
 					
-		return render_template('creategroup.html', zipcode=zipcode, cuisines=cuisine_names, selected_cuisines=selected_cuisines, crew_id=crew_id)
+		return render_template('creategroup.html', zipcode=zipcode, cuisines=cuisine_names, selected_cuisines=array_selected_cuisines, crew_id=crew_id)
 	
 	if request.method == "POST":
 		return redirect(url_for("start_voting"))
@@ -180,12 +187,6 @@ def start_voting():
 # Normal group members:
 @app.route('/group/join')
 def join_group():
-	page = {
-		'author': 'Seohyun',
-		'title': 'Eaterank: Join Existing Group',
-		'description': 'Join existing groups for voting on restaurants.'
-	}
-
 	return render_template('joingroup.html')
 
 @app.route('/voting', methods = ["GET", "POST"])
