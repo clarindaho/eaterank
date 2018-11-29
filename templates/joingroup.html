@@ -1,25 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-	<title>Eaterank</title>
-	<link href="{{url_for('static', filename='style.css')}}" rel="stylesheet" type="text/css">
-	<link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR" rel="stylesheet">
-	<link rel="shortcut icon" href="">
-</head>
-<body style="background: url({{url_for('static', filename='img/Background.jpg')}});">
-		<div class="main">
-			<h1 class="title">Joining New Group</h1>
-			<div class="content">
-				<form action="{{url_for('wait_user')}}" method="post">
-					<p>Enter Group Code</p> <!--Need to set color-->
-					<input type="text" name ="group_code"><br>
-				</form>
-				<a href="/">
-					<div style="float: left">
-						Return to Main
-					</div>
-				</a>
-			</div>
+{% extends "base.html" %}
+
+{% block author %}Seohyun{% endblock %}
+{% block title %}{% endblock %}
+{% block og_title %}{% endblock %}
+{% block description %}{{ super() }}{% endblock %}
+{% block og_description %}{{ super() }}{% endblock %}
+
+{% block body %}
+	<div class="home">
+		<h1 class="home_title">Joining New Group</h1>
+		<div class="home_content">
+			<form action="{{url_for('wait_user')}}" method="post" style="margin-bottom: 10%;">
+				<h1 class="home_title" style="font-size: 30px; margin-top: 10%;">Enter Group Code</h1>
+				<input type="text" name ="group_code" 
+						style="width: 10%; padding: 12px; font-size: 20px; border-radius: 10px; background-color: #5C787F; color: #AFC6CC; text-align: center;"><br>
+			</form>
+			<a class="button" href="/" style="height: 20%; margin-top: 10%;">
+				Return to Main
+			</a>
 		</div>
-</body>
+	</div>
+{% endblock %}
 </html>

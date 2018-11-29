@@ -1,17 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-	<title>Eaterank</title>
-	<link href="{{url_for('static', filename='style.css')}}" rel="stylesheet" type="text/css">
-	<link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR" rel="stylesheet">
-	<link rel="shortcut icon" href="">
-</head>
-<body style="background: url({{url_for('static', filename='img/Background.jpg')}});">
-		<div class="main">
-			<h1 class="title"></h1>
-			<div class="content">
-				
-			</div>
+{% extends "base.html" %}
+
+{% block author %}Seohyun{% endblock %}
+{% block title %}{% endblock %}
+{% block og_title %}{% endblock %}
+{% block description %}{{ super() }}{% endblock %}
+{% block og_description %}{{ super() }}{% endblock %}
+
+{% block body %}
+	<div class="home">
+		<h1 class="home_title"></h1>
+		<div class="content">
+			
 		</div>
-</body>
+	</div>
+{% endblock %}
 </html>
