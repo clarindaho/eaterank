@@ -12,10 +12,8 @@
 	<div class="home">
 		<h1 class="home_title">Accepting Responses ...</h1>
 		<div class="content">
-			<form action="{{url_for(end_voting)}}" method="post">
-			<div class="button" id="small_button" style="margin: 12% 10% 0% 35%">
-				End Voting
-			</div>
+			<form action="{{url_for('end_voting')}}" method="post">
+			<input class="button" type="submit" id="small_button" value="End Voting" style="margin: 10% 15% 0% 10%">
 			<input type="hidden" value="{{crew_id}}" name="crew_id">
 			</form>
 		</div>
