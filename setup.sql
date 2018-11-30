@@ -34,6 +34,6 @@ create table restaurant(
     address varchar(255),
     rating float,
     price_range varchar(255),
-#    image varchar(255),
-    menu_url varchar(255)
+    menu_url varchar(255),
+    image_url varchar(255)
 );
