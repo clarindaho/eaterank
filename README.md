@@ -4,9 +4,10 @@ Clarinda Ho (cqh), Seohyun Jung (sxj393), Jason Shin (jjs270), Catherine Tsuei (
 ### Requirements
 - Python 3
 - mySQL
+- **sudo** privileges
 
 ### Setting Up the Database
-See DatabaseSetup.md.
+See *DatabaseSetup.md*.
 
 ### Hosting the Web Application
 1. Setup host configurations
@@ -39,9 +40,9 @@ See DatabaseSetup.md.
 
 ### Voting
 1. Restaurant information will be displayed with buttons for approving/disapproving
-2. Click on desired button. The next restaurant to vote on will appear automatically
+2. Click on desired button. The next restaurant to vote on will appear automatically.
 3. Repeat *Steps 1* and *2* for remaining restaurants (there will be 10 restaurants in total)
-4. After voting on the last restaurant:
+4. After voting on the last restaurant
 	- If group leader, wait for all group members to finish voting before clicking **Display Results**
 	- If regular user, wait for the group leader to display the final restaurant result
 5. Final result will be displayed with the restaurant that has the most popular votes

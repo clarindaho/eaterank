@@ -9,28 +9,22 @@ Clarinda Ho (cqh), Seohyun Jung (sxj393), Jason Shin (jjs270), Catherine Tsuei (
 2. Create virtual environment named eaterank
 	<br> ***virtualenv eaterank***
 3. Activate virtual environment
-	<div> <b> <i>
-		<br> cd eaterank
-		<br> source bin/activate
-	</b> </i> </div>
+	- ***cd eaterank***
+	- ***source bin/activate***
 4. Install flask on virtual environment
 	<br> ***pip3 install flask***
 5. Install mysql connector
 	<br> ***pip3 install mysql-connector***
 6. Install supporting libraries
-	<div> <b> <i>
-		<br> pip3 install requests
-		<br> pip3 install logger
-		<br> pip3 install configparser
-		<br> pip3 install bs4
-	</b> </i>
-	</div>
+	- ***pip3 install requests***
+	- ***pip3 install logger***
+	- ***pip3 install configparser***
+	- ***pip3 install bs4***
 7. Create database on local machine
-	<div> <b> <i>
-		<br> mysql -u root -p
-		<br> SOURCE setup.sql;
-		<br> quit;
-	</b> </i> </div>
+	- ***mysql -u root -p***
+	- Enter mySQL password for **'root'**
+	- ***SOURCE setup.sql;***
+	- ***quit;***
 8. To deactivate virtual environment
 	<br> ***deactivate***
 
