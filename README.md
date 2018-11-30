@@ -1,39 +1,43 @@
 ## EECS 341 Project
 Clarinda Ho (cqh), Seohyun Jung (sxj393), Jason Shin (jjs270), Catherine Tsuei (cwt26)
 
-Setting up the database:
+### Setting Up the Database:
 See DatabaseSetup.
 
-1. Run the website
+### Hosting the Web Application:
+1. Setup host configurations
+   cd to project directory 'eaterank'
+   Edit file 'config.ini' and replace the value specified in 'host' under section '[app]' with the desired host's IP address. The IP address can be left as is if testing only internally on the localhost.
+   Optional: Edit file 'config.ini' and replace the value specified in 'port' under section '[app]' with the desired port.
+2. Start hosting the web application
    cd to project directory 'eaterank'
    python routes.py
-2. Open the URL listed in a browser in as many tabs as users in the group.
-   Have one tab instance be the group leader and the others regular users.
+3. Testing the web application
+   Open the URL listed in a browser for as many tabs as users in the group.
+   Have one tab instance be the group leader and the others as regular users.
 
-Group Leader
-1. Click 'Create a Group'.
-2. Enter zipcode of where you want to search for restaurants.
-   Share the group code listed on this page with your other users.
-   Click Submit.
-3. Select the desired cuisines from the displayed list and click Submit.
-4. A waiting page will be displayed. Once all users have entered the group code on their ends,
-   click Start Voting.
+### Group Leader:
+1. Click <Create a Group>.
+2. Enter ZIP code of where you want to search for restaurants. Press <Enter> after you finish typing in the ZIP code.
+3. Select the desired cuisines from the displayed list. Click <Submit> after you finish selecting all desired cuisines.
+4. Share the group code listed on this page with your other users. Click <Enter Waiting Room>.
+5. A waiting page will be displayed. Once all users have entered the group code on their end, click <Start Voting> to begin the voting process.
 5. See Voting section.
 
-Regular User
-1. Click 'Join an Existing Group'.
-2. Enter the group code in textbox provided. Click Submit.
-   a. if valid code, will proceed to 3.
-   b. if invalid code, error message will be displayed.
-   c. if voting has already started for that group, error message will be displayed.
-3. Wait for group leader to begin the voting process. Will be taken to the voting page.
+### Regular User:
+1. Click <Join an Existing Group>.
+2. Enter the group code (given by the group leader) in the text box provided. Press <Enter> after you finish typing in the group code.
+   a. If valid group code, proceed to Step 3.
+   b. If invalid group code, an error message will be displayed.
+   c. If voting has already started for that group, an error message will be displayed.
+3. Wait for group leader to begin the voting process. Once the voting process has begun, voting page will be automatically displayed.
 4. See Voting section.
 
-Voting
+### Voting:
 1. Restaurant information will be displayed with buttons for approving/disapproving.
-2. Click on desired button. Will be taken to the next restaurant to vote on.
-3. Continue for remaining restaurants (there will be 10 in total);
+2. Click on desired button. The next restaurant to vote on will appear automatically.
+3. Repeat Steps 1 and 2 for remaining restaurants. (There will be 10 restaurants in total.)
 4. After voting on the last restaurant:
-   a. if group leader, wait for all user to finish voting before clicking 'Display results'
-   b. if regular user, wait for group leader to display the final restaurant result
+   a. If group leader, wait for all group members to finish voting before clicking <Display Results>.
+   b. If regular user, wait for the group leader to display the final restaurant result.
 5. Final result will be displayed with the restaurant that has the most popular votes.
