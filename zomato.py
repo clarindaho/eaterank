@@ -51,7 +51,6 @@ def getCuisinesZip(zip):
 	lat = coords[0]
 	lng = coords[1]
 	geocode_url = ZOMATO + "geocode?lat=" + str(lat) + "&lon=" + str(lng)
-	print(geocode_url)
 	results = requests.get(geocode_url, headers = hdrs).json()
 	cuisines = results["popularity"]["top_cuisines"]
 	cuisine_ids = []
@@ -78,7 +77,6 @@ def getRestaurants(cuisine_ids, zip):
 	for c in cuisine_ids:
 		cuisines_string += str(c[1]) + ","
 	cuisines_string = cuisines_string[:len(cuisines_string) - 1]
-	print(cuisines_string)
 	search_url = ZOMATO + "search?lat=" + str(lat) + "&lon=" + str(lng) + "&cuisines=" + cuisines_string + "&sort=real_distance&count=10"
 	results = requests.get(search_url, headers = hdrs).json()
 	
@@ -110,7 +108,6 @@ def getImageUrl(url):
 		soup = BeautifulSoup(page.content, 'html.parser')
 		bigImage = soup.find(class_="big-image ui middle aligned one column centered grid")
 		img = bigImage.find("img")
-		print(img['src'])
 		return img['src']
 	else:
 		return ""
