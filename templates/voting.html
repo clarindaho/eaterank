@@ -12,18 +12,25 @@
 	<div class="home">
 		<h1 class="home_title">{restaurant['name']}</h1>
 		<div class="content" style="color: white;">
-			<!--Need to add image-->
-			cusine type: {restaurant['cuisine']}<br>
-			address: {restaurant['address']}<br>
-			phone number: {restaurant['phone_num']}<br>
+			<!--Still thinking about how to display this
+				Don't worry about this part-->
+			cusine type: {{restaurant['cuisine']}}<br>
+			address: {{restaurant['address']}}<br>
 		</div>
 		<form action="{{url_for('vote_for')}}" method='post' style="float: left;">
-			<input type="submit" value="Good"
-				style="">
+			<input type="submit" value="Good" style="">
+			<input value="{{crew_id}}" name="crew_id">
+			<!--Here is where I intend to add restaurant id
+				which I cannot locate						-->
+			<!--input value="{{}}" name="restaurant_id"-->
+			<input value="{{index}}" name="index">
+			<input value="{{group_leader}}" name="group_leader">
 		</form>
 		<form action="{{url_for('vote_against')}}" method='post' style="float: right;">
-			<input type="submit" value="Bad"
-				style="">
+			<input type="submit" value="Bad" style="">
+			<input value="{{crew_id}}" name="crew_id">			
+			<input value="{{index}}" name="index">
+			<input value="{{group_leader}}" name="group_leader">
 		</form>
 	</div>
 {% endblock %}
