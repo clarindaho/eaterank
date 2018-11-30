@@ -108,8 +108,6 @@ def getImageUrl(url):
 		soup = BeautifulSoup(page.content, 'html.parser')
 		bigImage = soup.find(class_="big-image ui middle aligned one column centered grid")
 		img = bigImage.find("img")
-		print("IMG SRC"+str(img))
 		return img['src']
 	else:
-		print("noimageavail")
 		return "https://previews.123rf.com/images/jehsomwang/jehsomwang1503/jehsomwang150300160/37725948-illustration-d-un-restaurant-vecteur-isol%C3%A9.jpg"
