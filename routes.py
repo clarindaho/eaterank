@@ -264,6 +264,9 @@ def vote_for():
 		print(form)
 		crew_id = int(form["crew_id"])
 		restaurant_id = int(form["restaurant_id"])
+		exists = sql_query(GET_CREW, params=(crew_id,))
+		if exists == []:
+			return render_template("joingroup.html", message="The group leader has ended the vote.")
 		vote_num = sql_query(GET_VOTE_NUM, params=(crew_id, restaurant_id))[0][0]
 		sql_execute(UPDATE_VOTE_COUNT, (vote_num + 1, crew_id, restaurant_id))
 		index = int(form["index"]) + 1
@@ -296,6 +299,9 @@ def vote_against():
 	if request.method == "POST":
 		form = request.form
 		crew_id = int(form["crew_id"])
+		exists = sql_query(GET_CREW, params=(crew_id,))
+		if exists == []:
+			return render_template("joingroup.html", message="The group leader has ended the vote.")
 		index = int(form["index"]) + 1
 		restaurants = sql_query(GET_RESTAURANT_IDS, params=(crew_id,))
 		group_leader = form["group_leader"]
@@ -329,9 +335,10 @@ def end_voting():
 		sql_execute(UPDATE_CREW_SELECTED_RESTAURANT, (selected_restaurantID, crew_id))
 		restaurant = sql_query(GET_RESTID_INFO, params=(selected_restaurantID,))[0]
 		# remove crew-related info from the database
-		voteIDs = sql_query(GET_CREW_VOTES, params=(crew_id,))[0]
+		voteIDs = sql_query(GET_CREW_VOTES, params=(crew_id,))
+		print(voteIDs)
 		for voteID in voteIDs:
-			sql_execute(DELETE_CREW_VOTES, params=(voteID,))
+			sql_execute(DELETE_CREW_VOTES, params=(voteID[0],))
 		sql_execute(DELETE_CREW, params=(crew_id,))
 		restaurant_dict = {"restaurant_id": restaurant[0], "name": restaurant[1], "cuisine": restaurant[2], "address": restaurant[3], "rating": restaurant[4], "price_range": restaurant[5], "menu_url": restaurant[6]}
 		return render_template('results.html', page = page, restaurant = restaurant_dict)

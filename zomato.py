@@ -78,7 +78,7 @@ def getRestaurants(cuisine_ids, zip):
 		cuisines_string += str(c[1]) + ","
 	cuisines_string = cuisines_string[:len(cuisines_string) - 1]
 	print(cuisines_string)
-	search_url = ZOMATO + "search?lat=" + str(lat) + "&lon=" + str(lng) + "&cuisines=" + cuisines_string + "&sort=real_distance"
+	search_url = ZOMATO + "search?lat=" + str(lat) + "&lon=" + str(lng) + "&cuisines=" + cuisines_string + "&sort=real_distance&count=10"
 	results = requests.get(search_url, headers = hdrs).json()
 	
 	# Restaurant Object List
