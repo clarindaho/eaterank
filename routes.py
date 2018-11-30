@@ -2,6 +2,7 @@
 from flask import Flask, redirect, render_template, request, session, url_for
 from time import sleep
 
+import re
 import configparser
 import mysql.connector
 from queries import *
@@ -108,9 +109,19 @@ def create_group():
 		
 		# Get ZIP code
 		zipcode = form["zipcode"]
-		
+		# check to see if a xxxxx-xxxx or xxxxx digit zipcode was submitted by the user
+		zipcode = zipcode.replace(" ", "")
+		pattern = r"(\b\d{5}-\d{4}\b|\b\d{5}\b)"
+		zipcode = re.findall(pattern, input)
+		if zipcode == []:
+			# not a valid zipcode - print error message
+		else
+			# get the first valid zipcode if 
+			zipcode = zipcode[0]
 		# Get cuisines based on the given ZIP code
 		cuisines = getCuisinesZip(zipcode)
+		if cuisines == []
+			# error message here if no cuisines are found
 		cuisine_names = get_cuisine_names(cuisines)
 		
 		return render_template('creategroup.html', zipcode=zipcode, cuisines=cuisine_names)
