@@ -18,7 +18,7 @@
 			<p class="home_text">Waiting for people to join...</p>
 			
 			{% if group_leader %}
-			<form action="/voting/start/{{ crew_id }}/1" method="POST">
+			<form action="/voting/start/{{ crew_id }}" method="POST">
 				<br><input type="submit" class="button" value="Start Voting">
 			</form>
 			{% endif %}
