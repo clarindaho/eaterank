@@ -1,4 +1,4 @@
-!/bin/sh
+#!/bin/sh
 
 # Install virtual environment by running
 sudo apt-get install virtualenv
@@ -24,4 +24,4 @@ pip3 install bs4
 
 # Create database on local machine
 cd ../
-mysql -u root -p -e "SOURCE setup.sql;"
+sudo mysql -u root -p -e "SOURCE setup.sql;"
