@@ -120,7 +120,6 @@ def create_group():
 		else:
 			# get the valid zipcode
 			zipcode = zipcode[0]
-			print("Zipcode" + str(zipcode))
 			# Get cuisines based on the given ZIP code
 			cuisines = getCuisinesZip(zipcode)
 			if cuisines == []:
@@ -168,14 +167,10 @@ def select_cuisine(zipcode):
 			restaurants = getRestaurants(cuisine_ids, zipcode)
 			for r in restaurants:
 				restaurant_params = (r.name, r.cuisine, r.address, r.rating, r.price_range, r.menu_url, r.image_url)
-				print("CREW_ID: " + str(crew_id))
-				print("r.image_url: " + r.image_url)
 				# Database SQL execution
 				restaurant_id = sql_query(RESTAURANT_EXISTS, params=(r.address,))
-				#print("RESTAURANT_ID: " + str(restaurant_id))
 				if restaurant_id == []:
 					restaurant_id = sql_execute(INSERT_RESTAURANT, params=restaurant_params)
-					print("RESTAURANT_ID: " + str(restaurant_id))
 				else:
 					restaurant_id = restaurant_id[0][0]
 				vote_params = (crew_id, restaurant_id)
@@ -286,7 +281,6 @@ def vote_for():
 						restaurant_dict = {"restaurant_id": restaurant[0], "name": restaurant[1], "cuisine": restaurant[2], "address": restaurant[3], "rating": restaurant[4], "price_range": restaurant[5], "menu_url": restaurant[6], "image_url": restaurant[7]}
 						# remove crew-related info from the database
 						voteIDs = sql_query(GET_CREW_VOTES, params=(crew_id,))
-						print(voteIDs)
 						for voteID in voteIDs:
 							sql_execute(DELETE_CREW_VOTES, params=(voteID[0],))
 						sql_execute(DELETE_CREW, params=(crew_id,))
@@ -313,25 +307,18 @@ def vote_against():
 			restaurant_dict = {"restaurant_id": restaurant[0], "name": restaurant[1], "cuisine": restaurant[2], "address": restaurant[3], "rating": restaurant[4], "price_range": restaurant[5], "menu_url": restaurant[6], "image_url": restaurant[7]}
 			return render_template('voting.html', page = page, crew_id = crew_id, restaurant=restaurant_dict, index=index, group_leader=group_leader)
 		else:
-			print("prin group leader")
-			print(group_leader)
 			if group_leader == "True":
 				# have a end voting button that will take you to the results page
 				return render_template('end_voting.html', page = page, crew_id = crew_id)
 			# regular user has to wait for the group leader to request final result
 			else:
 				while True:
-					print("kill me now")
-					print(sql_query(GET_CREW_SELECTED_REST, params=(crew_id,)))
 					selected_restaurantID = sql_query(GET_CREW_SELECTED_REST, params=(crew_id,))[0][0]
 					if selected_restaurantID != None:
-						print("SELECTED_RESTAURANT ID")
-						print(selected_restaurantID)
 						restaurant = sql_query(GET_RESTID_INFO, params=(selected_restaurantID,))[0]
 						restaurant_dict = {"restaurant_id": restaurant[0], "name": restaurant[1], "cuisine": restaurant[2], "address": restaurant[3], "rating": restaurant[4], "price_range": restaurant[5], "menu_url": restaurant[6], "image_url": restaurant[7]}
 						# remove crew-related info from the database
 						voteIDs = sql_query(GET_CREW_VOTES, params=(crew_id,))
-						print(voteIDs)
 						for voteID in voteIDs:
 							sql_execute(DELETE_CREW_VOTES, params=(voteID[0],))
 						sql_execute(DELETE_CREW, params=(crew_id,))
