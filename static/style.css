@@ -94,8 +94,8 @@ input[type=text] {
 .home {
 	align-self: center;
 	position: fixed;
-	margin: 3% 10% 5% 10%;
-	height: 80%;
+	margin: 0% 10% 0% 10%;
+	height: 100%;
 	width: 80%;
 	
 	background-color: rgba(0, 0, 0, 0.5);
@@ -107,7 +107,7 @@ input[type=text] {
 	margin-top: 5%;
 	
 	color: var(--white);		
-	font-size: 50px;
+	font-size: 35px;
 	font-weight: 100;
 }
 
