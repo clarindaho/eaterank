@@ -205,8 +205,8 @@ def waiting_nongroupleader():
 		
 		return render_template("waiting.html", crew_id=crew_id)
 
-@app.route('/voting/start/<crew_id>/<group_leader>', methods=["GET", "POST"])
-def start_voting(crew_id, group_leader):
+@app.route('/voting/start/<crew_id>', methods=["GET", "POST"])
+def start_voting(crew_id):
 	if request.method == "GET":
 		return redirect(url_for("index"))
 		
