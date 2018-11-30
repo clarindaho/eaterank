@@ -121,6 +121,7 @@ def create_group():
 		else:
 			# get the valid zipcode
 			zipcode = zipcode[0]
+			print("Zipcode" + str(zipcode))
 			# Get cuisines based on the given ZIP code
 			cuisines = getCuisinesZip(zipcode)
 			if cuisines == []:
