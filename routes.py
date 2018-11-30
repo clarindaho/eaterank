@@ -325,15 +325,16 @@ def end_voting():
 	if request.method == "POST":
 		form = request.form
 		crew_id = int(form["crew_id"])
-		selected_restaurantID = sql_query(SELECTED_RESTAURANT, params=(crew_id,))[0]
+		selected_restaurantID = int(sql_query(SELECTED_RESTAURANT, params=(crew_id,))[0][0])
 		sql_execute(UPDATE_CREW_SELECTED_RESTAURANT, (selected_restaurantID, crew_id))
-		restaurant = sql_query(GET_RESTID_INFO, params=selected_restaurantID)[0]
+		restaurant = sql_query(GET_RESTID_INFO, params=(selected_restaurantID,))[0]
 		# remove crew-related info from the database
-		voteIDS = sql_execute(GET_CREW_VOTES, params=(crew_id,))
+		voteIDs = sql_query(GET_CREW_VOTES, params=(crew_id,))[0]
 		for voteID in voteIDs:
-			sql_execute(DELETE_CREW_VOTES, params=voteID)
+			sql_execute(DELETE_CREW_VOTES, params=(voteID,))
 		sql_execute(DELETE_CREW, params=(crew_id,))
-		return render_template('results.html', page = page, restaurant = restaurant)
+		restaurant_dict = {"restaurant_id": restaurant[0], "name": restaurant[1], "cuisine": restaurant[2], "address": restaurant[3], "rating": restaurant[4], "price_range": restaurant[5], "menu_url": restaurant[6]}
+		return render_template('results.html', page = page, restaurant = restaurant_dict)
 		
 # Main method
 if __name__ == '__main__':
