@@ -31,6 +31,7 @@ def toLatLong(zip):
 		key = GEOCODING_API_KEY
 	)
 	results = requests.get(url).json()
+	if results["results"] == []: return []
 	lat = results["results"][0]["geometry"]["location"]["lat"]
 	lng = results["results"][0]["geometry"]["location"]["lng"]
 	return (lat, lng)
@@ -45,6 +46,7 @@ def getCuisinesZip(zip):
 			  Zomato API
 	"""
 	coords = toLatLong(zip)
+	if coords == []: return coords
 	lat = coords[0]
 	lng = coords[1]
 	geocode_url = ZOMATO + "geocode?lat=" + str(lat) + "&lon=" + str(lng)
