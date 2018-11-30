@@ -273,7 +273,7 @@ def vote_for():
 		restaurants = sql_query(GET_RESTAURANT_IDS, params=(crew_id,))
 		print("printing restaurants")
 		print(restaurants)
-		group_leader = form["group_leader"]
+		group_leader = bool(form["group_leader"])
 		if index < len(restaurants) - 1:
 			restaurant = sql_query(GET_RESTID_INFO, params=restaurants[index])[0]
 			restaurant_dict = {"restaurant_id": restaurant[0], "name": restaurant[1], "cuisine": restaurant[2], "address": restaurant[3], "rating": restaurant[4], "price_range": restaurant[5], "menu_url": restaurant[6]}
@@ -304,7 +304,7 @@ def vote_against():
 			return render_template("joingroup.html", message="The group leader has ended the vote.")
 		index = int(form["index"]) + 1
 		restaurants = sql_query(GET_RESTAURANT_IDS, params=(crew_id,))
-		group_leader = form["group_leader"]
+		group_leader = bool(form["group_leader"])
 		if index < len(restaurants) - 1:
 			restaurant = sql_query(GET_RESTID_INFO, params=restaurants[index])[0]
 			restaurant_dict = {"restaurant_id": restaurant[0], "name": restaurant[1], "cuisine": restaurant[2], "address": restaurant[3], "rating": restaurant[4], "price_range": restaurant[5], "menu_url": restaurant[6]}
