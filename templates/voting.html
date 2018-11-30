@@ -12,20 +12,21 @@
 	<div class="home">
 		<h1 class="home_title">{{restaurant['name']}}</h1>
 		<div class="content" style="color: white;">
-			<!--Still thinking about how to display this
-				Don't worry about this part-->
-			cusine type: {{restaurant['cuisine']}}<br>
 			address: {{restaurant['address']}}<br>
+			cusine type: {{restaurant['cuisine']}}<br>
+			price range: {{restaurant['price_range']}}<br>
+			<br>
+			<a href="{{restaurant['menu_url']}}" style="text-decoration: underline; font-style: italic;">
 		</div>
-		<form action="{{url_for('vote_for')}}" method='post' style="float: left;">
-			<input type="submit" value="Good" style="">
+		<form action="{{url_for('vote_for')}}" method='post' id="small_button" style="margin-left: 5%;">
+			<input class="button" type="submit" value="Good" style="float: left">
 			<input type="hidden" value="{{crew_id}}" name="crew_id">
 			<input type="hidden" value="{{restaurant['restaurant_id']}}" name = "restaurant_id">
 			<input type="hidden" value="{{index}}" name="index">
 			<input type="hidden" value="{{group_leader}}" name="group_leader">
 		</form>
-		<form action="{{url_for('vote_against')}}" method='post' style="float: right;">
-			<input type="submit" value="Bad" style="">
+		<form action="{{url_for('vote_against')}}" method='post' id="small_button" style="margin-right: 5%;">
+			<input class ="button" type="submit" value="Bad">
 			<input type="hidden" value="{{crew_id}}" name="crew_id">			
 			<input type="hidden" value="{{index}}" name="index">
 			<input type="hidden" value="{{group_leader}}" name="group_leader">
