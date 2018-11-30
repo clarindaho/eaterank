@@ -15,7 +15,7 @@
 		<h1 class="home_title">{{restaurant['name']}}</h1>
 		<!-- Restaurant Details -->
 		<div class="content" style="color: white;">
-			<img src="{{restaurant['image_url']}}" alt="No Image Available"/>
+			<img style="width: 400px; height: 300px;" src="{{restaurant['image_url']}}" alt="No Image Available"/>
 			<br>
 			address: {{restaurant['address']}}<br>
 			cusine type: {{restaurant['cuisine']}}<br>
@@ -28,14 +28,14 @@
 		
 		<!-- Vote For Button -->
 		<form style="margin-left:5%;" action="{{url_for('vote_for')}}" method='post'>
-			<input class="button" type="submit" value="Good" style="float: left;">
+			<input class="button" type="submit" value="Good" style="float: left; margin-left: 0px;">
 			<input type="hidden" value="{{crew_id}}" name="crew_id">
 			<input type="hidden" value="{{restaurant['restaurant_id']}}" name = "restaurant_id">
 			<input type="hidden" value="{{index}}" name="index">
 			<input type="hidden" value="{{group_leader}}" name="group_leader">
 		</form>
 		<form action="{{url_for('vote_against')}}" method='post' style="margin-right: 5%;">
-			<input class ="button" type="submit" value="Bad" style="float: right;">
+			<input class ="button" type="submit" value="Bad" style="float: right; margin-right: 0px;">
 			<input type="hidden" value="{{crew_id}}" name="crew_id">			
 			<input type="hidden" value="{{index}}" name="index">
 			<input type="hidden" value="{{group_leader}}" name="group_leader">
