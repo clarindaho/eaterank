@@ -194,26 +194,3 @@ input[type=text] {
 }
 
 /* End Create Group Page */
-
-/* Voting Page */
-
-.main.vote {
-	
-}
-
-.main.result{
-	
-}
-
-.restaurant_name{
-	color: var(--light_grey);
-	font-size: 40px;
-	font-weight: 100;
-}
-
-.restaurant_description{
-	color: var(--light_grey);
-	font-size: 14px;
-}
-
-/* End Voting Page */

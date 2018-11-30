@@ -10,9 +10,14 @@
 
 {% block body %}
 	<div class="home">
-		<h1 class="home_title"></h1>
+		<h1 class="home_title">Accepting Responses ...</h1>
 		<div class="content">
-			
+			<form action="{{url_for(end_voting)}}" method="post">
+			<div class="button" id="small_button" style="margin: 12% 10% 0% 35%">
+				End Voting
+			</div>
+			<input type="hidden" value="{{crew_id}}" name="crew_id">
+			</form>
 		</div>
 	</div>
 {% endblock %}
