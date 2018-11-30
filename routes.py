@@ -2,7 +2,6 @@
 from flask import Flask, redirect, render_template, request, session, url_for
 from time import sleep
 
-import re
 import configparser
 import mysql.connector
 from queries import *
