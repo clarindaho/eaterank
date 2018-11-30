@@ -1,23 +1,29 @@
 <!DOCTYPE html>
+
 <html lang="en">
-<head>
-	<title>Eaterank</title>
-	<link href="{{url_for('static', filename='style.css')}}" rel="stylesheet" type="text/css">
-	<link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR" rel="stylesheet">
-	<link rel="shortcut icon" href="">
-</head>
-<body style="background: url({{url_for('static', filename='img/Background.jpg')}});">
-		<div class="main">
-			<h1 class="title"></h1>
-			<div class="content">
-				<!--Need to add image-->
-				<h1 class="title">Selected restaurant</h1>
-				<div>
-				cusine type: {restaurant['cuisine']}<br>
-				address: {restaurant['address']}<br>
-				phone number: {restaurant['phone_num']}<br>
-				</div>
+
+{% extends "base.html" %}
+
+{% block author %}Seohyun{% endblock %}
+{% block title %}: Results{% endblock %}
+{% block og_title %}: Results{% endblock %}
+{% block description %}Displays the results of the group after voting process has been completed.{% endblock %}
+{% block og_description %}Displays the results of the group after voting process has been completed.{% endblock %}
+
+{% block body %}
+	<div class="home">
+		<h1 class="home_title">Results</h1>
+		<div class="home_content">
+		
+			<!-- Need to add image -->
+			<h1 class="home_title">Selected restaurant</h1>
+			<div>
+				cusine type: {{ restaurant['cuisine'] }}<br>
+				address: {{ restaurant['address'] }}<br>
+				phone number: {{ restaurant['phone_num'] }}<br>
 			</div>
 		</div>
-</body>
+	</div>
+{% endblock %}
+	
 </html>
