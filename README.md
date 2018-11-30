@@ -25,7 +25,8 @@ See *DatabaseSetup.md*.
 1. Click **Create a Group**
 2. Enter ZIP code of where you want to search for restaurants. Press **Enter** after you finish typing in the ZIP code.
 3. Select the desired cuisines from the displayed list. Click **Submit** after you finish selecting all desired cuisines.
-4. Share the group code listed on this page with your other users. Click **Enter Waiting Room**.
+4. The group code will appear on the page. Share this group code with your other users. Click **Enter Waiting Room** to wait for others to join using the group code.
+	- The group code may take a while to appear. This is because behind the scenes, we are looking up all the restaurants' information and pictures.
 5. A waiting page will be displayed. Once all users have entered the group code on their end, click **Start Voting** to begin the voting process.
 5. See *Voting* section
 
