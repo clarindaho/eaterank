@@ -85,10 +85,12 @@ def format_selected_cuisine(selected_cuisines):
 	
 	return array_selected_cuisines
 	
+"""
 # Error page
 @app.errorhandler(404)
 def page_not_found(e):
 	return render_template('404.html'), 404
+"""
 
 # Home page
 @app.route('/')
@@ -142,27 +144,26 @@ def select_cuisine(zipcode):
 		else:
 			# Create new crew in database and get its associated crew_id
 			crew_id = sql_execute(INSERT_CREW, params=None)
-			
+			crew_id =int(crew_id)
 			# Get cuisine_id for each of the selected cuisines
 			cuisine_ids = []
 			for selected_cuisine in selected_cuisines:
 				cuisine_ids.append(get_cuisine_tuple(selected_cuisine, cuisines))
 			
-			"""
 			# Get restaurants in the area (specified by ZIP code) associated with the specified cuisines (specified by ID)
 			# Insert these restaurants and their associated votes (by the group) into the database
 			restaurants = getRestaurants(cuisine_ids, zipcode)
 			for r in restaurants:
 				restaurant_params = (r.name, r.cuisine, r.address, r.rating, r.price_range, r.menu_url)
-				
+				print("CREW_ID: " + str(crew_id))
 				# Database SQL execution
-				restaurant_id = sql_query(RESTAURANT_EXISTS, params=r.address)
-				if restaurant_id == None:
-					restaurant_id = sql_execute(INSERT_RESTAURANT, params=restaurant_params)
-				
+				restaurant_id = sql_query(RESTAURANT_EXISTS, params=(r.address,))[0][0]
+				print("RESTAURANT_ID: " + str(restaurant_id))
+				if restaurant_id == []:
+					restaurant_id = sql_execute(INSERT_RESTAURANT, params=restaurant_params)[0]
+					print("RESTAURANT_ID: " + str(restaurant_id))
 			vote_params = (crew_id, restaurant_id)
 			sql_execute(INSERT_VOTE, vote_params)
-			"""
 			
 			return render_template('creategroup.html', zipcode=zipcode, cuisines=cuisine_names, selected_cuisines=selected_cuisines, crew_id=crew_id)
 
@@ -194,10 +195,10 @@ def start_voting(crew_id, group_leader):
 		
 	if request.method == "POST":
 		sql_execute(UPDATE_CREW_VOTING, (True, crew_id))
-		restaurants = sql_query(GET_RESTAURANT_IDS, params=crew_id)
-		restaurant = sql_query(GET_RESTID_INFO, restaurants[0])
-		
-		return render_template('voting.html', crew_id = crew_id, restaurant=restaurant, index=0, group_leader= True)
+		restaurants = sql_query(GET_RESTAURANT_IDS, params=(crew_id,))
+		restaurant = sql_query(GET_RESTID_INFO, restaurants[0])[0]
+		restaurant_dict = {"id": restaurant[0], "name": restaurant[1], "cuisine": restaurant[2], "address": restaurant[3], "rating": restaurant[4], "price_range": restaurant[5], "menu_url": restaurant[6]}
+		return render_template('voting.html', crew_id = crew_id, restaurant=restaurant_dict, index=0, group_leader= True)
 
 # Normal group members:
 @app.route('/group/join')
@@ -210,16 +211,16 @@ def wait_user():
 		return redirect(url_for("index"))
 	if request.method == "POST":
 		form = request.form
-		crew_id = form["crew_id"]
-		result = sql_query(GET_CREW, params=crew_id)
+		crew_id = form["group_code"]
+		result = sql_query(GET_CREW, params=(crew_id,))
 		message = ""
         # invalid crew id
 		if result == []:
 			message = "You have entered an invalid crew id."
-			return render_template('joingroup.html', message = message, page = page)
+			return render_template('joingroup.html', message = message)
 		else:
-			result = sql_query(GET_CREW_VOTING, params=crew_id)
-			vote_started = result[0]
+			result = sql_query(GET_CREW_VOTING, params=(crew_id,))
+			vote_started = bool(result[0][0])
             # voting has already started for the group - inform user
 			if vote_started:
 				message = "Voting has already started. Sorry."
@@ -227,12 +228,13 @@ def wait_user():
             # wait for group leader to begin the voting process for entire group
 			else:
 				while True:
-					result = sql_query(GET_CREW_VOTING, params=crew_id)
-					vote_started = result[0]
+					result = sql_query(GET_CREW_VOTING, params=(crew_id,))
+					vote_started = bool(result[0][0])
 					if vote_started:
-						restaurants = sql_query(GET_RESTAURANT_IDS, params=crew_id)
-						restaurant = sql_query(GET_RESTID_INFO, params=restaurants[0])
-						return render_template('voting.html', crew_id = crew_id, restaurant=restaurant, index=0, group_leader= False)
+						restaurants = sql_query(GET_RESTAURANT_IDS, params=(crew_id,))
+						restaurant = sql_query(GET_RESTID_INFO, params=restaurants[0])[0]
+						restaurant_dict = {"id": restaurant[0], "name": restaurant[1], "cuisine": restaurant[2], "address": restaurant[3], "rating": restaurant[4], "price_range": restaurant[5], "menu_url": restaurant[6]}
+						return render_template('voting.html', crew_id = crew_id, restaurant=restaurant_dict, index=0, group_leader= False)
 					sleep(5)
 
 @app.route('/votefor', methods = ["GET", "POST"])
@@ -242,12 +244,12 @@ def vote_for():
 		return redirect(url_for("index"))
 	if request.method == "POST":
 		form = request.form
-		crew_id = form["crew_id"]
-		restaurant_id = form["restaurant_id"]
+		crew_id = int(form["crew_id"])
+		restaurant_id = int(form["restaurant_id"])
 		vote_num = sql_query(GET_VOTE_NUM, params=(crew_id, restaurant_id))[0]
 		sql_execute(UPDATE_VOTE_COUNT, (vote_num + 1, crew_id, restaurant_id))
 		index = form["index"] + 1
-		restaurants = sql_query(GET_RESTAURANT_IDS, params=crew_id)
+		restaurants = sql_query(GET_RESTAURANT_IDS, params=(crew_id,))
 		group_leader = form["group_leader"]
 		if index < len(restaurants) - 1:
 			restaurant = sql_query(GET_RESTID_INFO, params=restaurants[index])
@@ -258,7 +260,7 @@ def vote_for():
 			# regular user has to wait for the group leader to request final result
 			else:
 				while True:
-					selected_restaurantID = sql_query(GET_CREW_SELECTED_REST, params=crew_id)[0]
+					selected_restaurantID = sql_query(GET_CREW_SELECTED_REST, params=(crew_id,))[0]
 					if selected_restaurantID != None:
 						restaurant = sql_query(GET_RESTID_INFO, params=selected_restaurantID)[0]
 						return render_template('results.html', page = page, restaurant = restaurant)
@@ -274,7 +276,7 @@ def vote_against():
 		form = request.form
 		crew_id = form["crew_id"]
 		index = form["index"] + 1
-		restaurants = sql_query(GET_RESTAURANT_IDS, params=crew_id)
+		restaurants = sql_query(GET_RESTAURANT_IDS, params=(crew_id,))
 		group_leader = form["group_leader"]
 		if index < len(restaurants) - 1:
 			restaurant = sql_query(GET_RESTID_INFO, params=restaurants[index])
@@ -286,7 +288,7 @@ def vote_against():
 			# regular user has to wait for the group leader to request final result
 			else:
 				while True:
-					selected_restaurantID = sql_query(GET_CREW_SELECTED_REST, params=crew_id)[0]
+					selected_restaurantID = sql_query(GET_CREW_SELECTED_REST, params=(crew_id,))[0]
 					if selected_restaurantID != None:
 						restaurant = sql_query(GET_RESTID_INFO, params=selected_restaurantID)[0]
 						return render_template('results.html', page = page, restaurant = restaurant)
@@ -301,14 +303,14 @@ def end_voting():
 	if request.method == "POST":
 		form = request.form
 		crew_id = form["crew_id"]
-		selected_restaurantID = sql_query(SELECTED_RESTAURANT, params=crew_id)
+		selected_restaurantID = sql_query(SELECTED_RESTAURANT, params=(crew_id,))
 		sql_execute(UPDATE_CREW_SELECTED_RESTAURANT, (selected_restaurantID, crew_id))
 		restaurant = sql_query(GET_RESTID_INFO, params=selected_restaurantID)[0]
 		# remove crew-related info from the database
-		voteIDS = sql_execute(GET_CREW_VOTES, params=crew_id)
+		voteIDS = sql_execute(GET_CREW_VOTES, params=(crew_id,))
 		for voteID in voteIDs:
 			sql_execute(DELETE_CREW_VOTES, params=voteID)
-		sql_execute(DELETE_CREW, params=crew_id)
+		sql_execute(DELETE_CREW, params=(crew_id,))
 		return render_template('results.html', page = page, restaurant = restaurant)
 		
 # Main method
