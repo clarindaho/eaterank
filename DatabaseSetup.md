@@ -12,7 +12,7 @@ Clarinda Ho (cqh), Seohyun Jung (sxj393), Jason Shin (jjs270), Catherine Tsuei (
 	<div> <b> <i>
 		<br> cd eaterank
 		<br> source bin/activate
-	</div>
+	</b> </i> </div>
 4. Install flask on virtual environment
 	<br> ***pip3 install flask***
 5. Install mysql connector
@@ -23,13 +23,14 @@ Clarinda Ho (cqh), Seohyun Jung (sxj393), Jason Shin (jjs270), Catherine Tsuei (
 		<br> pip3 install logger
 		<br> pip3 install configparser
 		<br> pip3 install bs4
+	</b> </i>
 	</div>
 7. Create database on local machine
 	<div> <b> <i>
 		<br> mysql -u root -p
 		<br> SOURCE setup.sql;
 		<br> quit;
-	</div>
+	</b> </i> </div>
 8. To deactivate virtual environment
 	<br> ***deactivate***
 
