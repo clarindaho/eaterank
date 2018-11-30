@@ -117,16 +117,18 @@ def create_group():
 		zipcode = re.findall(pattern, input)
 		if zipcode == []:
 			# not a valid zipcode - print error message
+			message = "Invalid zipcode."
 		else
-			# get the first valid zipcode if 
+			# get the first valid zipcode if multiple valid zip codes are found
 			zipcode = zipcode[0]
 		# Get cuisines based on the given ZIP code
 		cuisines = getCuisinesZip(zipcode)
-		if cuisines == []
+		if cuisines == []:
 			# error message here if no cuisines are found
+			message = "No cuisines found for that zipcode."
 		cuisine_names = get_cuisine_names(cuisines)
 		
-		return render_template('creategroup.html', zipcode=zipcode, cuisines=cuisine_names)
+		return render_template('creategroup.html', zipcode=zipcode, cuisines=cuisine_names, message=message)
 
 @app.route('/group/create/<zipcode>', methods=["GET", "POST"])
 def select_cuisine(zipcode):
