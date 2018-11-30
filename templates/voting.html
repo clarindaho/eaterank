@@ -15,6 +15,8 @@
 		<h1 class="home_title">{{restaurant['name']}}</h1>
 		<!-- Restaurant Details -->
 		<div class="content" style="color: white;">
+			<img src="{{restaurant['image_url']}}" alt="No Image Available"/>
+			<br>
 			address: {{restaurant['address']}}<br>
 			cusine type: {{restaurant['cuisine']}}<br>
 			price range: {{restaurant['price_range']}}<br>
@@ -25,7 +27,7 @@
 		</div>
 		
 		<!-- Vote For Button -->
-		<form style="margin-left:5%; action="{{url_for('vote_for')}}" method='post'>
+		<form style="margin-left:5%;" action="{{url_for('vote_for')}}" method='post'>
 			<input class="button" type="submit" value="Good" style="float: left;">
 			<input type="hidden" value="{{crew_id}}" name="crew_id">
 			<input type="hidden" value="{{restaurant['restaurant_id']}}" name = "restaurant_id">
