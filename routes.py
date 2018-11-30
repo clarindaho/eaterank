@@ -111,24 +111,25 @@ def create_group():
 		
 		# Get ZIP code
 		zipcode = form["zipcode"]
-		# check to see if a xxxxx-xxxx or xxxxx digit zipcode was submitted by the user
-		zipcode = zipcode.replace(" ", "")
-		pattern = r"(\b\d{5}-\d{4}\b|\b\d{5}\b)"
-		zipcode = re.findall(pattern, input)
+		# check to see if a five-digit zipcode was submitted by the user
+		pattern = r"(\b\d{5}\b)"
+		zipcode = re.findall(pattern, zipcode)
+		message = ""
 		if zipcode == []:
-			# not a valid zipcode - print error message
+			# not a valid zipcode
 			message = "Invalid zipcode."
-		else
-			# get the first valid zipcode if multiple valid zip codes are found
+			return render_template('creategroup.html', message=message)
+		else:
+			# get the valid zipcode
 			zipcode = zipcode[0]
-		# Get cuisines based on the given ZIP code
-		cuisines = getCuisinesZip(zipcode)
-		if cuisines == []:
-			# error message here if no cuisines are found
-			message = "No cuisines found for that zipcode."
-		cuisine_names = get_cuisine_names(cuisines)
-		
-		return render_template('creategroup.html', zipcode=zipcode, cuisines=cuisine_names, message=message)
+			# Get cuisines based on the given ZIP code
+			cuisines = getCuisinesZip(zipcode)
+			if cuisines == []:
+				# no cuisines are found
+				message = "No cuisines found for that zipcode."
+				return render_template('creategroup.html', message=message)
+			cuisine_names = get_cuisine_names(cuisines)
+		return render_template('creategroup.html', zipcode=zipcode, cuisines=cuisine_names)
 
 @app.route('/group/create/<zipcode>', methods=["GET", "POST"])
 def select_cuisine(zipcode):
