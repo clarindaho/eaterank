@@ -40,7 +40,7 @@ INSERT_RESTAURANT = ("INSERT INTO restaurant(name, cuisine, address, rating, pri
 GET_RESTAURANT_IDS = ("SELECT restaurant_id "
                         "FROM vote "
                         "WHERE crew_id=%s")
-GET_RESTID_INFO = ("SELECT cuisine, address, phone_num, rating, price_range, image, menu_url "
+GET_RESTID_INFO = ("SELECT restaurant_id, name, cuisine, address, rating, price_range, menu_url "
                     "FROM restaurant "
                     "WHERE restaurant_id=%s")
 INSERT_VOTE = ("INSERT INTO vote(crew_id, restaurant_id, vote_num) "
