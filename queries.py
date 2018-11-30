@@ -35,12 +35,12 @@ DELETE_CREW = ("DELETE FROM crew "
 RESTAURANT_EXISTS = ("SELECT restaurant_id "
                     "FROM restaurant "
                     "WHERE address=%s")
-INSERT_RESTAURANT = ("INSERT INTO restaurant(name, cuisine, address, rating, price_range, menu_url) "
-                    "VALUES(%s, %s, %s, %s, %s, %s)")
+INSERT_RESTAURANT = ("INSERT INTO restaurant(name, cuisine, address, rating, price_range, menu_url, image_url) "
+                    "VALUES(%s, %s, %s, %s, %s, %s, %s)")
 GET_RESTAURANT_IDS = ("SELECT restaurant_id "
                         "FROM vote "
                         "WHERE crew_id=%s")
-GET_RESTID_INFO = ("SELECT restaurant_id, name, cuisine, address, rating, price_range, menu_url "
+GET_RESTID_INFO = ("SELECT restaurant_id, name, cuisine, address, rating, price_range, menu_url, image_url "
                     "FROM restaurant "
                     "WHERE restaurant_id=%s")
 INSERT_VOTE = ("INSERT INTO vote(crew_id, restaurant_id, vote_num) "

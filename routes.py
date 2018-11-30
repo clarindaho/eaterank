@@ -169,7 +169,7 @@ def select_cuisine(zipcode):
 			# Insert these restaurants and their associated votes (by the group) into the database
 			restaurants = getRestaurants(cuisine_ids, zipcode)
 			for r in restaurants:
-				restaurant_params = (r.name, r.cuisine, r.address, r.rating, r.price_range, r.menu_url)
+				restaurant_params = (r.name, r.cuisine, r.address, r.rating, r.price_range, r.menu_url, r.image_url)
 				print("CREW_ID: " + str(crew_id))
 				# Database SQL execution
 				restaurant_id = sql_query(RESTAURANT_EXISTS, params=(r.address,))
@@ -201,7 +201,7 @@ def waiting_nongroupleader():
 	
 	if request.method == "POST":
 		form = request.form
-		crew_id = form["group_code"]
+		crew_id = form["crew_id"]
 		
 		return render_template("waiting.html", crew_id=crew_id)
 
@@ -214,7 +214,7 @@ def start_voting(crew_id, group_leader):
 		sql_execute(UPDATE_CREW_VOTING, (True, crew_id))
 		restaurants = sql_query(GET_RESTAURANT_IDS, params=(crew_id,))
 		restaurant = sql_query(GET_RESTID_INFO, restaurants[0])[0]
-		restaurant_dict = {"restaurant_id": restaurant[0], "name": restaurant[1], "cuisine": restaurant[2], "address": restaurant[3], "rating": restaurant[4], "price_range": restaurant[5], "menu_url": restaurant[6]}
+		restaurant_dict = {"restaurant_id": restaurant[0], "name": restaurant[1], "cuisine": restaurant[2], "address": restaurant[3], "rating": restaurant[4], "price_range": restaurant[5], "menu_url": restaurant[6], "image_url": restaurant[7]}
 		return render_template('voting.html', crew_id = crew_id, restaurant=restaurant_dict, index=0, group_leader= True)
 
 # Normal group members:
@@ -228,7 +228,7 @@ def wait_user():
 		return redirect(url_for("index"))
 	if request.method == "POST":
 		form = request.form
-		crew_id = form["group_code"]
+		crew_id = form["crew_id"]
 		result = sql_query(GET_CREW, params=(crew_id,))
 		message = ""
         # invalid crew id
@@ -250,7 +250,7 @@ def wait_user():
 					if vote_started:
 						restaurants = sql_query(GET_RESTAURANT_IDS, params=(crew_id,))
 						restaurant = sql_query(GET_RESTID_INFO, params=restaurants[0])[0]
-						restaurant_dict = {"restaurant_id": restaurant[0], "name": restaurant[1], "cuisine": restaurant[2], "address": restaurant[3], "rating": restaurant[4], "price_range": restaurant[5], "menu_url": restaurant[6]}
+						restaurant_dict = {"restaurant_id": restaurant[0], "name": restaurant[1], "cuisine": restaurant[2], "address": restaurant[3], "rating": restaurant[4], "price_range": restaurant[5], "menu_url": restaurant[6], "image_url": restaurant[7]}
 						return render_template('voting.html', crew_id = crew_id, restaurant=restaurant_dict, index=0, group_leader= False)
 					sleep(5)
 
@@ -273,21 +273,34 @@ def vote_for():
 		restaurants = sql_query(GET_RESTAURANT_IDS, params=(crew_id,))
 		print("printing restaurants")
 		print(restaurants)
-		group_leader = bool(form["group_leader"])
+		group_leader = form["group_leader"]
 		if index < len(restaurants) - 1:
 			restaurant = sql_query(GET_RESTID_INFO, params=restaurants[index])[0]
-			restaurant_dict = {"restaurant_id": restaurant[0], "name": restaurant[1], "cuisine": restaurant[2], "address": restaurant[3], "rating": restaurant[4], "price_range": restaurant[5], "menu_url": restaurant[6]}
+			restaurant_dict = {"restaurant_id": restaurant[0], "name": restaurant[1], "cuisine": restaurant[2], "address": restaurant[3], "rating": restaurant[4], "price_range": restaurant[5], "menu_url": restaurant[6], "image_url": restaurant[7]}
 			return render_template('voting.html', page = page, crew_id = crew_id, restaurant=restaurant_dict, index=index, group_leader=group_leader)
 		else:
-			if group_leader:
+			print("prin group leader")
+			print(group_leader)
+			if group_leader == "True":
 				return render_template('end_voting.html', page = page, crew_id = crew_id)
 			# regular user has to wait for the group leader to request final result
 			else:
 				while True:
-					selected_restaurantID = sql_query(GET_CREW_SELECTED_REST, params=(crew_id,))[0]
+					print("kill me now")
+					print(sql_query(GET_CREW_SELECTED_REST, params=(crew_id,)))
+					selected_restaurantID = sql_query(GET_CREW_SELECTED_REST, params=(crew_id,))[0][0]
+					print("SELECTED_RESTAURANT ID")
+					print(selected_restaurantID)
 					if selected_restaurantID != None:
-						restaurant = sql_query(GET_RESTID_INFO, params=selected_restaurantID)[0]
-						return render_template('results.html', page = page, restaurant = restaurant)
+						restaurant = sql_query(GET_RESTID_INFO, params=(selected_restaurantID,))[0]
+						restaurant_dict = {"restaurant_id": restaurant[0], "name": restaurant[1], "cuisine": restaurant[2], "address": restaurant[3], "rating": restaurant[4], "price_range": restaurant[5], "menu_url": restaurant[6], "image_url": restaurant[7]}
+						# remove crew-related info from the database
+						voteIDs = sql_query(GET_CREW_VOTES, params=(crew_id,))
+						print(voteIDs)
+						for voteID in voteIDs:
+							sql_execute(DELETE_CREW_VOTES, params=(voteID[0],))
+						sql_execute(DELETE_CREW, params=(crew_id,))
+						return render_template('results.html', page = page, restaurant = restaurant_dict)
 					sleep(5)
 
 # user votes against restaurant - proceed to next restaurant or wait for results to appear
@@ -304,22 +317,36 @@ def vote_against():
 			return render_template("joingroup.html", message="The group leader has ended the vote.")
 		index = int(form["index"]) + 1
 		restaurants = sql_query(GET_RESTAURANT_IDS, params=(crew_id,))
-		group_leader = bool(form["group_leader"])
+		group_leader = form["group_leader"]
 		if index < len(restaurants) - 1:
 			restaurant = sql_query(GET_RESTID_INFO, params=restaurants[index])[0]
-			restaurant_dict = {"restaurant_id": restaurant[0], "name": restaurant[1], "cuisine": restaurant[2], "address": restaurant[3], "rating": restaurant[4], "price_range": restaurant[5], "menu_url": restaurant[6]}
+			restaurant_dict = {"restaurant_id": restaurant[0], "name": restaurant[1], "cuisine": restaurant[2], "address": restaurant[3], "rating": restaurant[4], "price_range": restaurant[5], "menu_url": restaurant[6], "image_url": restaurant[7]}
 			return render_template('voting.html', page = page, crew_id = crew_id, restaurant=restaurant_dict, index=index, group_leader=group_leader)
 		else:
-			if group_leader:
+			print("prin group leader")
+			print(group_leader)
+			if group_leader == "True":
 				# have a end voting button that will take you to the results page
 				return render_template('end_voting.html', page = page, crew_id = crew_id)
 			# regular user has to wait for the group leader to request final result
 			else:
 				while True:
-					selected_restaurantID = sql_query(GET_CREW_SELECTED_REST, params=(crew_id,))[0]
+					print("kill me now")
+					print(sql_query(GET_CREW_SELECTED_REST, params=(crew_id,)))
+					selected_restaurantID = sql_query(GET_CREW_SELECTED_REST, params=(crew_id,))[0][0]
 					if selected_restaurantID != None:
-						restaurant = sql_query(GET_RESTID_INFO, params=selected_restaurantID)[0]
-						return render_template('results.html', page = page, restaurant = restaurant)
+						print("SELECTED_RESTAURANT ID")
+						print(selected_restaurantID)
+						restaurant = sql_query(GET_RESTID_INFO, params=(selected_restaurantID,))[0]
+						restaurant_dict = {"restaurant_id": restaurant[0], "name": restaurant[1], "cuisine": restaurant[2], "address": restaurant[3], "rating": restaurant[4], "price_range": restaurant[5], "menu_url": restaurant[6], "image_url": restaurant[7]}
+						# remove crew-related info from the database
+						voteIDs = sql_query(GET_CREW_VOTES, params=(crew_id,))
+						print(voteIDs)
+						for voteID in voteIDs:
+							sql_execute(DELETE_CREW_VOTES, params=(voteID[0],))
+						sql_execute(DELETE_CREW, params=(crew_id,))
+
+						return render_template('results.html', page = page, restaurant = restaurant_dict)
 					sleep(5)
 
 # Finds the selected restaurant after the group leader requests results
@@ -334,13 +361,7 @@ def end_voting():
 		selected_restaurantID = int(sql_query(SELECTED_RESTAURANT, params=(crew_id,))[0][0])
 		sql_execute(UPDATE_CREW_SELECTED_RESTAURANT, (selected_restaurantID, crew_id))
 		restaurant = sql_query(GET_RESTID_INFO, params=(selected_restaurantID,))[0]
-		# remove crew-related info from the database
-		voteIDs = sql_query(GET_CREW_VOTES, params=(crew_id,))
-		print(voteIDs)
-		for voteID in voteIDs:
-			sql_execute(DELETE_CREW_VOTES, params=(voteID[0],))
-		sql_execute(DELETE_CREW, params=(crew_id,))
-		restaurant_dict = {"restaurant_id": restaurant[0], "name": restaurant[1], "cuisine": restaurant[2], "address": restaurant[3], "rating": restaurant[4], "price_range": restaurant[5], "menu_url": restaurant[6]}
+		restaurant_dict = {"restaurant_id": restaurant[0], "name": restaurant[1], "cuisine": restaurant[2], "address": restaurant[3], "rating": restaurant[4], "price_range": restaurant[5], "menu_url": restaurant[6], "image_url": restaurant[7]}
 		return render_template('results.html', page = page, restaurant = restaurant_dict)
 		
 # Main method

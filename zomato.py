@@ -1,5 +1,6 @@
-import requests, logger
+import requests, logger, urllib.request as urllib
 from restaurant import restaurant 
+from bs4 import BeautifulSoup
 
 # API Keys
 GEOCODING_API_KEY = "AIzaSyDS1s0wGheIZjQ-r_ZP1A6Y4YZ7tnyT_KQ"
@@ -92,6 +93,24 @@ def getRestaurants(cuisine_ids, zip):
 		rating = r["user_rating"]["aggregate_rating"]
 		price_range = r["price_range"]
 		menu_url = r["menu_url"]
-		rObj = restaurant(name, cuisine, address, rating, price_range, menu_url)
+		photo_album = r["photos_url"]
+		image_url = getImageUrl(photo_album)
+		rObj = restaurant(name, cuisine, address, rating, price_range, menu_url, image_url)
 		restaurantObjs.append(rObj)
 	return restaurantObjs
+
+def getImageUrl(url):
+	page = requests.get(url, headers={'User-Agent': 'Mozilla/5.0'})
+	soup = BeautifulSoup(page.content, 'html.parser')
+	thumbsContainer = soup.find(id="thumbsContainer")
+	a = thumbsContainer.find("a")
+	if a != None:
+		url = a['href']
+		page = requests.get(url, headers={'User-Agent': 'Mozilla/5.0'})
+		soup = BeautifulSoup(page.content, 'html.parser')
+		bigImage = soup.find(class_="big-image ui middle aligned one column centered grid")
+		img = bigImage.find("img")
+		print(img['src'])
+		return img['src']
+	else:
+		return ""
