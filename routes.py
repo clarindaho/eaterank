@@ -169,6 +169,8 @@ def select_cuisine(zipcode):
 			# Insert these restaurants and their associated votes (by the group) into the database
 			restaurants = getRestaurants(cuisine_ids, zipcode)
 			for r in restaurants:
+				if (r.image_url == ""):
+					r.image_url = "http://www.supercoloring.com/sites/default/files/silhouettes/2015/05/couple-in-a-restaurant-black-silhouette.svg";	
 				restaurant_params = (r.name, r.cuisine, r.address, r.rating, r.price_range, r.menu_url, r.image_url)
 				print("CREW_ID: " + str(crew_id))
 				# Database SQL execution
