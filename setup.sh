@@ -11,15 +11,16 @@ cd eaterank
 source bin/activate
 
 # Install flask on virtual environment
-pip install flask
+pip3 install flask
 
 # Install mysql connector
-pip install mysql-connector
+pip3 install mysql-connector
 
 # Install supporting libraries
-pip install requests
-pip install logger
-pip install configparser
+pip3 install requests
+pip3 install logger
+pip3 install configparser
+pip3 install bs4
 
 # Create database on local machine
 cd ../
