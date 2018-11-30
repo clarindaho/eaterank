@@ -25,17 +25,15 @@
 		</div>
 		
 		<!-- Vote For Button -->
-		<form action="{{url_for('vote_for')}}" method='post' id="small_button" style="margin-left: 5%;">
-			<input class="button" type="submit" value="Good" style="float: left">
+		<form style="margin-left:5%; action="{{url_for('vote_for')}}" method='post'>
+			<input class="button" type="submit" value="Good" style="float: left;">
 			<input type="hidden" value="{{crew_id}}" name="crew_id">
 			<input type="hidden" value="{{restaurant['restaurant_id']}}" name = "restaurant_id">
 			<input type="hidden" value="{{index}}" name="index">
 			<input type="hidden" value="{{group_leader}}" name="group_leader">
 		</form>
-		
-		<!-- Vote Against Button -->
-		<form action="{{url_for('vote_against')}}" method='post' id="small_button" style="margin-right: 5%;">
-			<input class ="button" type="submit" value="Bad">
+		<form action="{{url_for('vote_against')}}" method='post' style="margin-right: 5%;">
+			<input class ="button" type="submit" value="Bad" style="float: right;">
 			<input type="hidden" value="{{crew_id}}" name="crew_id">			
 			<input type="hidden" value="{{index}}" name="index">
 			<input type="hidden" value="{{group_leader}}" name="group_leader">
