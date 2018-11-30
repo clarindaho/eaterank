@@ -1,16 +1,19 @@
 <!DOCTYPE html>
+
 <html lang="en">
+
 {% extends "base.html" %}
 
 {% block author %}Seohyun{% endblock %}
-{% block title %}{% endblock %}
-{% block og_title %}{% endblock %}
-{% block description %}{{ super() }}{% endblock %}
-{% block og_description %}{{ super() }}{% endblock %}
+{% block title %}: Voting{% endblock %}
+{% block og_title %}: Voting{% endblock %}
+{% block description %}Vote on restaurants for an existing group.{% endblock %}
+{% block og_description %}Vote on restaurants for an existing group.{% endblock %}
 
 {% block body %}
 	<div class="home">
 		<h1 class="home_title">{{restaurant['name']}}</h1>
+		<!-- Restaurant Details -->
 		<div class="content" style="color: white;">
 			address: {{restaurant['address']}}<br>
 			cusine type: {{restaurant['cuisine']}}<br>
@@ -20,6 +23,8 @@
 				Link to all menus
 			</a>
 		</div>
+		
+		<!-- Vote For Button -->
 		<form action="{{url_for('vote_for')}}" method='post' id="small_button" style="margin-left: 5%;">
 			<input class="button" type="submit" value="Good" style="float: left">
 			<input type="hidden" value="{{crew_id}}" name="crew_id">
@@ -27,6 +32,8 @@
 			<input type="hidden" value="{{index}}" name="index">
 			<input type="hidden" value="{{group_leader}}" name="group_leader">
 		</form>
+		
+		<!-- Vote Against Button -->
 		<form action="{{url_for('vote_against')}}" method='post' id="small_button" style="margin-right: 5%;">
 			<input class ="button" type="submit" value="Bad">
 			<input type="hidden" value="{{crew_id}}" name="crew_id">			
@@ -35,4 +42,5 @@
 		</form>
 	</div>
 {% endblock %}
+
 </html>
