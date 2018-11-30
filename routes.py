@@ -172,11 +172,13 @@ def select_cuisine(zipcode):
 				restaurant_params = (r.name, r.cuisine, r.address, r.rating, r.price_range, r.menu_url)
 				print("CREW_ID: " + str(crew_id))
 				# Database SQL execution
-				restaurant_id = sql_query(RESTAURANT_EXISTS, params=(r.address,))[0][0]
-				print("RESTAURANT_ID: " + str(restaurant_id))
+				restaurant_id = sql_query(RESTAURANT_EXISTS, params=(r.address,))
+				#print("RESTAURANT_ID: " + str(restaurant_id))
 				if restaurant_id == []:
-					restaurant_id = sql_execute(INSERT_RESTAURANT, params=restaurant_params)[0]
+					restaurant_id = sql_execute(INSERT_RESTAURANT, params=restaurant_params)
 					print("RESTAURANT_ID: " + str(restaurant_id))
+				else:
+					restaurant_id = restaurant_id[0][0]
 				vote_params = (crew_id, restaurant_id)
 				sql_execute(INSERT_VOTE, vote_params)
 			
