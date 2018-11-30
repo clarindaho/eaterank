@@ -12,16 +12,15 @@
 
 {% block body %}
 	<div class="home">
-		<h1 class="home_title">Results</h1>
-		<div class="home_content">
-		
-			<!-- Need to add image -->
-			<h1 class="home_title">Selected restaurant</h1>
-			<div>
-				cusine type: {{ restaurant['cuisine'] }}<br>
-				address: {{ restaurant['address'] }}<br>
-				phone number: {{ restaurant['phone_num'] }}<br>
-			</div>
+		<h1 class="home_title">Result: {{restaurant['name']}}</h1>
+		<div class="home_text">
+			cusine type: {{ restaurant['cuisine'] }}<br>
+			address: {{ restaurant['address'] }}<br>
+			price range: {{ restaurant['price_range'] }}<br>
+			<br>
+			<a href="{{restaurant['menu_url']}}" style="text-decoration: underline; font-style: italic;">
+				Link to all menus
+			</a>
 		</div>
 	</div>
 {% endblock %}

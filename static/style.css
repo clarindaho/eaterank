@@ -76,6 +76,12 @@ p {
 	color: black;
 }
 
+#small_button{
+	width: 20%;
+	height: 10%;
+	font-size: 20px;
+}
+
 input[type=text] {
 	width: 25%;
 	padding-top: 12px;
