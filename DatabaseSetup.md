@@ -5,7 +5,8 @@ Clarinda Ho (cqh), Seohyun Jung (sxj393), Jason Shin (jjs270), Catherine Tsuei (
 
 #### Manual Setup
 1. Install virtual environment by running
-	<br> ***sudo apt-get install virtualenv***
+	- ***sudo apt-get install virtualenv***
+	- Enter **sudo** password if prompted
 2. Create virtual environment named eaterank
 	<br> ***virtualenv eaterank***
 3. Activate virtual environment
@@ -22,7 +23,7 @@ Clarinda Ho (cqh), Seohyun Jung (sxj393), Jason Shin (jjs270), Catherine Tsuei (
 	- ***pip3 install bs4***
 7. Create database on local machine
 	- ***mysql -u root -p***
-	- Enter mySQL password for **'root'**
+	- Enter MySQL password for **'root'**
 	- ***SOURCE setup.sql;***
 	- ***quit;***
 8. To deactivate virtual environment
@@ -33,10 +34,11 @@ Clarinda Ho (cqh), Seohyun Jung (sxj393), Jason Shin (jjs270), Catherine Tsuei (
 	<br> ***chmod +x setup.sh***
 2. Run the shell script executable
 	<br> ***./setup.sh***
-3. Enter mySQL password for **'root'** when prompted
+3. Enter **sudo** password if prompted
+4. Enter MySQL password for **'root'** when prompted
 
 ### Potential Error Solutions
-- **'no module named configparser':**
+- **'no module named configparser'**
 	- ***pip3 install configparser***
-- **'caching sha_2_password cannot be loaded':**
+- **'caching sha_2_password cannot be loaded'**
 	- If using MySQL on Windows, set the user authentication method to **standard**
