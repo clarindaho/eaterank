@@ -230,7 +230,7 @@ def wait_user():
 		return redirect(url_for("index"))
 	if request.method == "POST":
 		form = request.form
-		crew_id = form["crew_id"]
+		crew_id = int(form["crew_id"])
 		result = sql_query(GET_CREW, params=(crew_id,))
 		message = ""
         # invalid crew id
