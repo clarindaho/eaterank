@@ -21,6 +21,14 @@
 					<input type="text" class="textentry" name ="group_code"><br>
 				</form>
 			</div>
+			
+			<!-- Error Message -->
+			{% if message %}
+				<br>
+				<div class="creategroup_text">
+					{{ message }}
+				</div>
+			{% endif %}
 		</div>
 	</div>
 {% endblock %}
