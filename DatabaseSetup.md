@@ -40,4 +40,3 @@ Clarinda Ho (cqh), Seohyun Jung (sxj393), Jason Shin (jjs270), Catherine Tsuei (
 	- ***pip3 install configparser***
 - **'caching sha_2_password cannot be loaded':**
 	- If using MySQL on Windows, set the user authentication method to **standard**
-*********************************
