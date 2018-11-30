@@ -22,4 +22,5 @@ pip install logger
 pip install configparser
 
 # Create database on local machine
+cd ../
 mysql -u root -p -e "SOURCE setup.sql;"
