@@ -7,7 +7,7 @@ Clarinda Ho (cqh), Seohyun Jung (sxj393), Jason Shin (jjs270), Catherine Tsuei (
 - **sudo** privileges
 
 ### Setting Up the Database
-See *DatabaseSetup.md*.
+See *DatabaseSetup.md* or *DatabaseSetup.pdf*.
 
 ### Hosting the Web Application
 1. Setup host configurations

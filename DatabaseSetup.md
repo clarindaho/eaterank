@@ -4,29 +4,29 @@ Clarinda Ho (cqh), Seohyun Jung (sxj393), Jason Shin (jjs270), Catherine Tsuei (
 ### Database Setup
 
 #### Manual Setup
-1. Install virtual environment by running
+1. Install *Virtual Environment* by running
 	- ***sudo apt-get install virtualenv***
 	- Enter **sudo** password if prompted
-2. Create virtual environment named eaterank
+2. Create new virtual environment named **eaterank**
 	<br> ***virtualenv eaterank***
-3. Activate virtual environment
+3. Activate the virtual environment
 	- ***cd eaterank***
 	- ***source bin/activate***
-4. Install flask on virtual environment
+4. Install *Flask* on the virtual environment
 	<br> ***pip3 install flask***
-5. Install mysql connector
+5. Install *MySQL Connector* on the virtual environment
 	<br> ***pip3 install mysql-connector***
-6. Install supporting libraries
+6. Install supporting libraries on the virtual environment
 	- ***pip3 install requests***
 	- ***pip3 install logger***
 	- ***pip3 install configparser***
 	- ***pip3 install bs4***
-7. Create database on local machine
+7. Create database on localhost
 	- ***mysql -u root -p***
 	- Enter MySQL password for **'root'**
 	- ***SOURCE setup.sql;***
 	- ***quit;***
-8. To deactivate virtual environment
+8. To deactivate the virtual environment
 	<br> ***deactivate***
 
 #### Automatic Setup
