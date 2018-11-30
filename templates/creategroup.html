@@ -17,9 +17,17 @@
 			<!-- ZIP Code -->
 			<div class="creategroup_text">
 				<form action="/group/create" method="POST">
-					Location: <input type="number" class="textentry" name="zipcode" placeholder={% if zipcode %}"{{ zipcode }}" disabled {% else %}"10001"{% endif %}><br>
+					Location: <input type="number" class="textentry" name="zipcode" maxlength="5" placeholder={% if zipcode %}"{{ zipcode }}" disabled {% else %}"10001"{% endif %}><br>
 				</form>
 			</div>
+			
+			<!-- Error Message -->
+			{% if message %}
+				<br>
+				<div class="creategroup_text">
+					{{ message }}
+				</div>
+			{% endif %}
 			
 			<!-- Cuisine Types -->
 			{% if cuisines %}
