@@ -1,19 +1,19 @@
-#!/bin/sh
+#!/bin/bash
 
-# Install virtual environment by running
+# Install Virtual Environment
 sudo apt-get install virtualenv
 
-# Create virtual environment named eaterank
-virtualenv eaterank
+# Create new virtual environment named eaterank
+virtualenv eaterank -p python3
 
-# Activate virtual environment
+# Activate the virtual environment
 cd eaterank
 source bin/activate
 
-# Install flask on virtual environment
+# Install Flask on the virtual environment
 pip3 install flask
 
-# Install mysql connector
+# Install MySQL Connector
 pip3 install mysql-connector
 
 # Install supporting libraries
@@ -22,6 +22,6 @@ pip3 install logger
 pip3 install configparser
 pip3 install bs4
 
-# Create database on local machine
+# Create database on localhost
 cd ../
 sudo mysql -u root -p -e "SOURCE setup.sql;"

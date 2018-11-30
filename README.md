@@ -10,14 +10,17 @@ Clarinda Ho (cqh), Seohyun Jung (sxj393), Jason Shin (jjs270), Catherine Tsuei (
 See *DatabaseSetup.md* or *DatabaseSetup.pdf*.
 
 ### Hosting the Web Application
-1. Setup host configurations
-	- cd to project directory **eaterank**
+1. **cd** to project directory **eaterank**
+2. Setup host configurations
 	- Edit file ***config.ini*** and replace the value specified in **host** under section **[app]** with the desired host's IP address. The IP address can be left as is if testing only internally on the localhost.
-	- **Optional**: edit file ***config.ini*** and replace the value specified in **port** under section **[app]** with the desired port
-2. Start hosting the web application
-	- cd to project directory **eaterank**
+	- **Optional**: Edit file ***config.ini*** and replace the value specified in **port** under section **[app]** with the desired port
+3. Start hosting the web application
+	- If the virtual environment is not activated
+		- ***cd eaterank***
+		- ***source bin/activate***
+		- ***cd ../***
 	- ***python3 routes.py***
-3. Testing the web application
+4. Test the web application
 	- Open the URL listed in a browser for as many tabs as users in the group
 	- Have one tab instance be the group leader and the others as regular users
 
@@ -28,7 +31,7 @@ See *DatabaseSetup.md* or *DatabaseSetup.pdf*.
 4. The group code will appear on the page. Share this group code with your other users. Click **Enter Waiting Room** to wait for others to join using the group code.
 	- The group code may take a while to appear. This is because behind the scenes, we are looking up all the restaurants' information and pictures.
 5. A waiting page will be displayed. Once all users have entered the group code on their end, click **Start Voting** to begin the voting process.
-5. See *Voting* section
+6. See *Voting* section
 
 ### Regular User
 1. Click **Join an Existing Group**
