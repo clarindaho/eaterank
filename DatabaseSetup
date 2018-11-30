@@ -1,29 +1,36 @@
 1. Install virtual environment by running
-sudo apt install virtualenv
+sudo apt-get install virtualenv
 
-2. Create virtual environment named flask
-virtualenv flask
+2. Create virtual environment named eaterank
+virtualenv eaterank
 
 3. Activate virtual environment
-cd flask
+cd eaterank
 source bin/activate
 
 4. Install flask on virtual environment
 pip install flask
 
-5. Install mysql connector:
+5. Install mysql connector
 pip install mysql-connector
 
-6. Create database on local machine
-mysql -u root -p
-source setup.sql
+6. Install supporting libraries
+pip install requests
+pip install logger
+pip install configparser
 
-To deactivate virtual environment:
+7. Create database on local machine
+mysql -u root -p
+source setup.sql;
+quit;
+
+8. To deactivate virtual environment
 deactivate
 
 *** Potential error solutions ***
 'no module named configparser':
 pip install configparser
-'caching sha_2_password cannot be loaded'
+
+'caching sha_2_password cannot be loaded':
 if using MySQL on Windows, set the user authentication method to standard
 *********************************
