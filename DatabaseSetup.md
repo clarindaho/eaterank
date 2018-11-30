@@ -1,5 +1,9 @@
+## EECS 341 Project
+Clarinda Ho (cqh), Seohyun Jung (sxj393), Jason Shin (jjs270), Catherine Tsuei (cwt26)
+
+### Database Setup
 1. Install virtual environment by running
-sudo apt-get install virtualenv
+<br>sudo apt-get install virtualenv
 
 2. Create virtual environment named eaterank
 virtualenv eaterank
