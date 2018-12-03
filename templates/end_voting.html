@@ -1,23 +1,26 @@
 <!DOCTYPE html>
+
 <html lang="en">
+
 {% extends "base.html" %}
 
 {% block author %}Seohyun{% endblock %}
-{% block title %}{% endblock %}
-{% block og_title %}{% endblock %}
-{% block description %}{{ super() }}{% endblock %}
-{% block og_description %}{{ super() }}{% endblock %}
+{% block title %}: End Voting{% endblock %}
+{% block og_title %}: End Voting{% endblock %}
+{% block description %}End voting on restaurants for an existing group.{% endblock %}
+{% block og_description %}End voting on restaurants for an existing group.{% endblock %}
 
 {% block body %}
 	<div class="home">
-		<h1 class="home_title">Accepting Responses ...</h1>
+		<h1 class="home_title">Accepting Responses...</h1>
 		<div class="content">
-			<form action="{{url_for('end_voting')}}" method="post">
+			<form action="{{ url_for('end_voting') }}" method="post">
 			<input class="button" type="submit" id="small_button" value="End Voting" style="margin: 10% 15% 0% 10%">
 
-			<input type="hidden" value="{{crew_id}}" name="crew_id">
+			<input type="hidden" value="{{ crew_id }}" name="crew_id">
 			</form>
 		</div>
 	</div>
 {% endblock %}
+
 </html>

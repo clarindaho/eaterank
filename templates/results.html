@@ -12,16 +12,16 @@
 
 {% block body %}
 	<div class="home">
-		<h1 class="home_title">Result: {{restaurant['name']}}</h1>
+		<h1 class="home_title">Result: {{ restaurant['name'] }}</h1>
 		<div class="home_text">
-			<img style="width:400px; height: 300px;" src="{{restaurant['image_url']}}" alt="No Image Available"/>
+			<img style="width:400px; height: 300px;" src="{{ restaurant['image_url'] }}" alt="No Image Available"/>
 			<br>
-			cusine type: {{ restaurant['cuisine'] }}<br>
+			cuisine type: {{ restaurant['cuisine'] }}<br>
 			address: {{ restaurant['address'] }}<br>
 			price range: {{ restaurant['price_range'] }}<br>
 			<br>
-			<a href="{{restaurant['menu_url']}}" style="text-decoration: underline; font-style: italic;">
-				Link to all menus
+			<a href="{{ restaurant['menu_url'] }}" style="text-decoration: underline; font-style: italic;">
+				Link to menu
 			</a>
 		</div>
 	</div>

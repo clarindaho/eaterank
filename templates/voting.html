@@ -12,33 +12,35 @@
 
 {% block body %}
 	<div class="home">
-		<h1 class="home_title">{{restaurant['name']}}</h1>
+		<h1 class="home_title">{{ restaurant['name'] }}</h1>
 		<!-- Restaurant Details -->
 		<div class="content" style="color: white;">
 			<img style="width: 400px; height: 300px;" src="{{restaurant['image_url']}}" alt="No Image Available"/>
 			<br>
-			address: {{restaurant['address']}}<br>
-			cusine type: {{restaurant['cuisine']}}<br>
-			price range: {{restaurant['price_range']}}<br>
+			address: {{ restaurant['address'] }}<br>
+			cuisine type: {{ restaurant['cuisine'] }}<br>
+			price range: {{ restaurant['price_range'] }}<br>
 			<br>
-			<a href="{{restaurant['menu_url']}}" style="text-decoration: underline; font-style: italic;">
-				Link to all menus
+			<a href="{{ restaurant['menu_url'] }}" style="text-decoration: underline; font-style: italic;">
+				Link to menu
 			</a>
 		</div>
 		
 		<!-- Vote For Button -->
-		<form style="margin-left:5%;" action="{{url_for('vote_for')}}" method='post'>
+		<form style="margin-left:5%;" action="{{ url_for('vote_for') }}" method='post'>
 			<input class="button" type="submit" value="Good" style="float: left; margin-left: 0px;">
-			<input type="hidden" value="{{crew_id}}" name="crew_id">
-			<input type="hidden" value="{{restaurant['restaurant_id']}}" name = "restaurant_id">
-			<input type="hidden" value="{{index}}" name="index">
-			<input type="hidden" value="{{group_leader}}" name="group_leader">
+			<input type="hidden" value="{{ crew_id }}" name="crew_id">
+			<input type="hidden" value="{{ restaurant['restaurant_id'] }}" name = "restaurant_id">
+			<input type="hidden" value="{{ index }}" name="index">
+			<input type="hidden" value="{{ group_leader }}" name="group_leader">
 		</form>
-		<form action="{{url_for('vote_against')}}" method='post' style="margin-right: 5%;">
+		
+		<!-- Vote Against Button -->
+		<form action="{{ url_for('vote_against') }}" method='post' style="margin-right: 5%;">
 			<input class ="button" type="submit" value="Bad" style="float: right; margin-right: 0px;">
-			<input type="hidden" value="{{crew_id}}" name="crew_id">			
-			<input type="hidden" value="{{index}}" name="index">
-			<input type="hidden" value="{{group_leader}}" name="group_leader">
+			<input type="hidden" value="{{ crew_id }}" name="crew_id">			
+			<input type="hidden" value="{{ index }}" name="index">
+			<input type="hidden" value="{{ group_leader }}" name="group_leader">
 		</form>
 	</div>
 {% endblock %}
